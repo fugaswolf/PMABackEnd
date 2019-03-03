@@ -15,12 +15,12 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('description');
-            $table->string('status');
-            $table->string('type');
-            $table->timestamp('start_time');
-            $table->timestamp('end_time');
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
+            $table->string('status')->nullable();
+            $table->string('type')->nullable();
+            $table->timestamp('start_time')->nullable();
+            $table->timestamp('end_time')->nullable();
             $table->timestamps();
         });
     }
