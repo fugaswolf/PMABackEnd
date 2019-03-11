@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Department;
+use App\Customer;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Department $department)
+    public function show(Customer $customer)
     {
         //
     }
@@ -52,10 +52,10 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Department $department)
+    public function edit(Customer $customer)
     {
         //
     }
@@ -64,10 +64,10 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Department  $department
+     * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Department $department)
+    public function update(Request $request, Customer $customer)
     {
         //
     }
@@ -75,10 +75,10 @@ class DepartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Department  $department
+     * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Department $department)
+    public function destroy(Customer $customer)
     {
         //
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimesheetsTable extends Migration
+class CreateDivisionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateTimesheetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('timesheets', function (Blueprint $table) {
-            $table->increments('id');  
+        Schema::create('divisions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateTimesheetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('timesheets');
+        Schema::dropIfExists('divisions');
     }
 }

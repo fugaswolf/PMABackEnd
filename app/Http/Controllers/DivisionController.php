@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Timesheet;
+use App\Division;
 use Illuminate\Http\Request;
 
-class TimesheetController extends Controller
+class DivisionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TimesheetController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Timesheet  $timesheet
+     * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function show(Timesheet $timesheet)
+    public function show(Division $division)
     {
         //
     }
@@ -52,10 +52,10 @@ class TimesheetController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Timesheet  $timesheet
+     * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function edit(Timesheet $timesheet)
+    public function edit(Division $division)
     {
         //
     }
@@ -64,10 +64,10 @@ class TimesheetController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Timesheet  $timesheet
+     * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Timesheet $timesheet)
+    public function update(Request $request, Division $division)
     {
         //
     }
@@ -75,10 +75,10 @@ class TimesheetController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Timesheet  $timesheet
+     * @param  \App\Division  $division
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Timesheet $timesheet)
+    public function destroy(Division $division)
     {
         //
     }

@@ -2,7 +2,7 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\Timesheet::class, function (Faker $faker) {
+$factory->define(App\Entry::class, function (Faker $faker) {
     return [
         //
     ];
