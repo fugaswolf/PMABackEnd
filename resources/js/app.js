@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -8,6 +7,53 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import { Form, HasError, AlertError } from 'vform';
+
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
+window.Form = Form;
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+
+const routes = [{
+        path: '/dashboard',
+        component: require('./components/Dashboard.vue').default
+    },
+    {
+        path: '/profile',
+        component: require('./components/Profile.vue').default
+    },
+    {
+        path: '/timer',
+        component: require('./components/Timer.vue').default
+    },
+    {
+        path: '/reports',
+        component: require('./components/Reports.vue').default
+    },
+    {
+        path: '/projects',
+        component: require('./components/Projects.vue').default
+    },
+    {
+        path: '/tasks',
+        component: require('./components/Tasks.vue').default
+    },
+    {
+        path: '/customers',
+        component: require('./components/Customers.vue').default
+    },
+    {
+        path: '/users',
+        component: require('./components/Users.vue').default
+    }
+]
+
+const router = new VueRouter({
+    mode: 'history',
+    routes // short for `routes: routes`
+})
 
 /**
  * The following block of code may be used to automatically register your
@@ -22,6 +68,21 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue').default
+);
+
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue').default
+);
+
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue').default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -29,5 +90,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router
 });
