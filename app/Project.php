@@ -17,7 +17,7 @@ class Project extends Model
      */
     public function customer()
     {
-        return $this->belongsTo('App\Customer');
+        return $this->belongsTo('Customer');
     }
    
     /**
@@ -25,8 +25,8 @@ class Project extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
      */
-    public function activities()
-    {
-        return $this->morphToMany('App\Activity', 'e');
+
+    public function customers(){
+        return $this->belongsTo('Customer','customer_id','id');
     }
 }

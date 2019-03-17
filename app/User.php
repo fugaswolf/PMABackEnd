@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -45,6 +46,16 @@ class User extends Authenticatable
     public function entry()
     {
         return $this->hasMany('App\Entry');
+    }
+
+    public function division()
+    {
+        return $this->hasOne('Division', 'division_id','id');
+    }
+
+    protected function setPasswordAttribute($value) 
+    { 
+        $this->attributes['password'] = Hash::make($value); 
     }
 
 }
