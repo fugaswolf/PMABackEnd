@@ -17,6 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:api')->get('/users', function (Request $request) {
+    return $request->user();
+});
+
 Route::group([
     'prefix' => 'auth'
 ], function () {
@@ -28,6 +32,13 @@ Route::group([
     ], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
-        Route::post('create', 'AuthController@create');
+        
     });
 });
+
+Route::post('users/create', 'UserController@create')->middleware('auth:api');
+Route::resource('/users', 'UserController')->middleware('auth:api');
+Route::resource('/customers', 'CustomerController')->middleware('auth:api');
+Route::delete('/users/{user}', 'UserController@destroy')->middleware('auth:api');
+Route::delete('/customers/{customer}', 'CustomerController@destroy')->middleware('auth:api');
+Route::get('profile', 'UserController@profile');
