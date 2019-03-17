@@ -7,7 +7,7 @@
                         <h3 class="card-title">Customers</h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal">Add customer<i class="fa fa-user-plus fa-fw"></i>
+                            <button class="btn btn-success" @click="newModal">Add customer <i class="fa fa-user-plus fa-fw"></i>
                             </button>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Comment</label>
-                                <textarea v-model="form.comment" type="text" name="comment" class="form-control" :class="{ 'is-invalid': form.errors.has('comment') }">
+                                <textarea v-model="form.comment" type="text" name="comment" class="form-control" :class="{ 'is-invalid': form.errors.has('comment') }"></textarea>
 
                             </div>
                             <div class="form-group">

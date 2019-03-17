@@ -94,13 +94,6 @@
                                     :class="{ 'is-invalid': form.errors.has('password') }">
                                 <has-error :form="form" field="password"></has-error>
                             </div>
-                            <!-- <div class="form-group">
-                                <label>Password confirmation</label>
-                                <input v-model="form.password_confirmation" type="password" name="password_confirmation" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('password') }">
-                                <has-error :form="form" field="password_confirmation"></has-error>
-                            </div> -->
-
 
                         </div>
 
