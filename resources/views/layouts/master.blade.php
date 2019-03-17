@@ -46,10 +46,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <router-link href="/home" class="brand-link">
-                <img src="./img/logo.png" alt="TeamTrack Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">TeamTrack</span>
-            </router-link>
+            <a href="/home" class="brand-link">
+                <div class="image">
+                    <img src="./img/logo.png" alt="TeamTrack Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text font-weight-light">TeamTrack</span>
+                </div>
+            </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
@@ -59,7 +61,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="./img/profile.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                        <a href="/profile" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
 
@@ -122,7 +124,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </router-link>
                                 </li>
                                 <li class="nav-item">
-                                    <router-link href="/customers" class="nav-link">
+                                    <router-link to="/customers" class="nav-link">
                                         <i class="nav-icon fa fa-handshake"></i>
                                         <p>Customers</p>
                                     </router-link>
@@ -135,21 +137,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Developer
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <router-link to="/TokenManager" class="nav-link">
+                                        <i class="nav-icon fa fa-universal-access"></i>
+                                        <p>Token Manager</p>
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
-                           
-                            <a class="nav-link" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                                     <i class="nav-icon fas fa-power-off"></i>
-                                                     <p>
-                                                     {{ __('Logout') }}
-                                                     </p>
-                                        
-                                    </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
+                            <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                <i class="nav-icon fas fa-power-off"></i>
+                                <p>
+                                    {{ __('Logout') }}
+                                </p>
+
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </nav>
@@ -166,6 +184,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="content">
                 <div class="container-fluid">
                     <router-view></router-view>
+                    <vue-progress-bar></vue-progress-bar>
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content -->
@@ -176,7 +195,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <footer class="main-footer">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
-                Anything you want
+                version 1.0
             </div>
             <!-- Default to the left -->
             <strong>Copyright &copy; 2019 <a href="https://codewolf.be">Alvi Istamalov</a>.</strong> All rights
