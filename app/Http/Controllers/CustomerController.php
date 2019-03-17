@@ -14,7 +14,11 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        //Get users
+        $customers = Customer::latest()->paginate(5);
+    
+        //Return collection of works as a resource
+        return CustomerResource::collection($customers);
     }
 
     /**
@@ -22,10 +26,26 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function create(Request $request){
+            
+        $request->validate([
+                'division_id' => 'integer',
+                'name' => 'required|string',
+                'email' => 'required|string|email|unique:customers',
+                'password' => 'required|string'
+            ]);
+            $user = new User([
+                'division_id' => $request->division,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
+            $user->save();
+            return response()->json([
+                'message' => 'Successfully created user!'
+            ], 201);
+    
+        }
 
     /**
      * Store a newly created resource in storage.
@@ -67,9 +87,13 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, $id)
     {
-        //
+        //dump($request->all());
+        $customer = Customer::where('id', '=', $id)->firstOrFail();
+
+        $customer->fill($request->all())->save();
+        return new CustomerResource($customer);
     }
 
     /**
@@ -78,8 +102,10 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy($id)
     {
-        //
+        return response()->json([
+            'message' => Customer::where('id', '=', $id)->firstOrFail()->delete() ? 'Success.' : 'Failed.'
+        ]);
     }
 }

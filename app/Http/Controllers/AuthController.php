@@ -33,29 +33,10 @@ class AuthController extends Controller
         ], 201);
     }
   
-    public function create(Request $request)
-    {
-        $request->validate([
-            'division_id' => 'number',
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-        ]);
-        $user = new User([
-            'division_id' => $request->division,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
-        $user->middleware()->save();
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+    // mijn eigen functie, deze moet de admin recht geven op een user aan te maken (eens hij ingelogd is)
 
-    }
-
-
-
-
+    // ik denkt da het 'integer' is in de plaats van 
+    
     /**
      * Login user and create token
      *
