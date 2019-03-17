@@ -37,7 +37,7 @@
                     </thead>
 
                     <tbody>
-                        <tr v-for="client in clients">
+                        <tr :key="client.id" v-for="client in clients">
                             <!-- ID -->
                             <td style="vertical-align: middle;">
                                 {{ client.id }}
@@ -90,7 +90,7 @@
                             <p class="mb-0"><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
                             <ul>
-                                <li v-for="error in createForm.errors">
+                                <li :key="error" v-for="error in createForm.errors">
                                     {{ error }}
                                 </li>
                             </ul>
@@ -158,7 +158,7 @@
                             <p class="mb-0"><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
                             <ul>
-                                <li v-for="error in editForm.errors">
+                                <li :key="error" v-for="error in editForm.errors">
                                     {{ error }}
                                 </li>
                             </ul>

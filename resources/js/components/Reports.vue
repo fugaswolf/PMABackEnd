@@ -1,9 +1,9 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-12">
+        <div class="row justify-content-center">
+            <div class="col-md-12 mt-5">
                 <div class="card">
-                    <div class="card-header">Reports</div>
+                    <div class="card-header"><h3 class="card-title">Reports</h3></div>
 
                     <div class="card-body">
                         I'm an example component.

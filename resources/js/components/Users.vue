@@ -1,14 +1,14 @@
 <template>
     <div class="container">
-        <div class="row mt-5">
-            <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 mt-5">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Users list</h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-success" data-toggle="modal" data-target="#addNewUser">Add user <i
-                                    class="fa fa-user-plus fa-fw"></i></button>
+                            <button class="btn btn-success" @click="newModal">Add user <i class="fa fa-user-plus fa-fw"></i>
+                            </button>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -20,19 +20,21 @@
                                     <th>Division</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Registered at</th>
                                     <th>Modify</th>
                                 </tr>
-                                <tr v-for="user in users" :key="user.id">
+                                <tr v-for="user in users.data" :key="user.id">
                                     <td>{{user.id}}</td>
-                                    <td>{{user.division}}</td>
+                                    <td>{{user.division_id}}</td>
                                     <td>{{user.name}}</td>
                                     <td>{{user.email}}</td>
+                                    <td>{{user.created_at | myDate}}</td>
                                     <td>
-                                        <a href="">
+                                        <a href="" @click="editModal(user)">
                                             <i class="fa fa-pencil-alt blue"></i>
                                         </a>
                                         /
-                                        <a href="">
+                                        <a href="" @click="deleteUser(user.id)">
                                             <i class="fa fa-trash-alt red"></i>
                                         </a>
                                     </td>
@@ -41,6 +43,10 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    <div class="card-footer">
+                        <pagination :data="users" @pagination-change-page="getResults"></pagination>
+                    </div>
+                    
                 </div>
                 <!-- /.card -->
             </div>
@@ -50,24 +56,25 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addNewUser">Add a new user</h5>
+                        <h5 class="modal-title" v-show="editmode" id="addNewUser">Edit user</h5>
+                        <h5 class="modal-title" v-show="!editmode" id="addNewUser">Add a new user</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
-                    <form @submit.prevent="createUser">
+                    <form @submit.prevent="editmode ? updateUser() : createUser()">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Division ID</label>
-                                <select v-model="form.division" type="division" name="division" class="custom-select"
-                                    :class="{ 'is-invalid': form.errors.has('division') }">
-                                    <option selected>Choose a division</option>
-                                    <option value="1">National</option>
-                                    <option value="2">International</option>
-                                    <option value="0">Other</option>
+                                <select v-model="form.division_id" type="text" name="division_id" id="division_id" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('division_id') }">
+                                    <option value="">Choose a division</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="0">0</option>
                                 </select>
-                                <has-error :form="form" field="division"></has-error>
+                                <has-error :form="form" field="division_id"></has-error>
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
@@ -87,12 +94,20 @@
                                     :class="{ 'is-invalid': form.errors.has('password') }">
                                 <has-error :form="form" field="password"></has-error>
                             </div>
+                            <!-- <div class="form-group">
+                                <label>Password confirmation</label>
+                                <input v-model="form.password_confirmation" type="password" name="password_confirmation" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('password') }">
+                                <has-error :form="form" field="password_confirmation"></has-error>
+                            </div> -->
+
 
                         </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Create user</button>
+                            <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
+                            <button v-show="!editmode" type="submit" class="btn btn-primary">Create user</button>
                         </div>
                     </form>
                 </div>
@@ -105,27 +120,111 @@
     export default {
         data() {
             return {
-                users : {}, 
+                editmode: false,
+                users: {},
                 form: new Form({
+                    id:'',
                     division_id: '',
                     name: '',
                     email: '',
                     password: '',
+                    // password_confirmation: '',
                     remember: false
                 })
             }
         },
         methods: {
-            loadUsers(){
-                axios.get("api/user").then(({data}) => (this.users = data.data));
+            getResults(page = 1){
+                axios.get('api/users?page=' + page)
+				.then(response => {
+					this.users = response.data;
+				});
+            },
+            updateUser(id){
+                this.$Progress.start();
+                this.form.put('api/users/'+this.form.id).then(() => {
+                    swal.fire(
+                                    'Updated!',
+                                    'The user information is updated.',
+                                    'success',
+                                ),
+                                this.$Progress.finish();
+                                 $('#addNewUser').modal('hide');
+                                Fire.$emit('AfterCreated')
+                }).catch(() => {
+                    this.$Progress.fail();
+                     $('#addNewUser').modal('hide');
+                    swal.fire("Failed!", "There was something wrong.", "warning");
+                });
+            },
+            editModal(user){
+                this.editmode = true;
+                this.form.reset();
+                event.preventDefault();
+                $('#addNewUser').modal('show');
+                this.form.fill(user);
+            },
+            newModal(){
+                this.editmode = false;
+                this.form.reset();
+                $('#addNewUser').modal('show');
+            },
+            deleteUser(id) {
+                event.preventDefault();
+                swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    // Send request to the server
+                    if (result.value) {
+                        this.form.delete('api/users/' + id).then(() => {
+                            swal.fire(
+                                    'Deleted!',
+                                    'User has been deleted.',
+                                    'success',
+                                ),
+                                Fire.$emit('AfterCreated')
+                        }).catch(() => {
+                            swal.fire("Failed!", "There was something wrong.", "warning");
+                        });
+                    }
+                })
+            },
+
+            loadUsers() {
+                axios.get("api/users").then(({
+                    data
+                }) => (this.users = data));
             },
             createUser() {
+                this.$Progress.start();
                 // Submit the form via a POST request
-                this.form.post('api/auth/create');
+                this.form.post("api/users/create").then(() => {
+                    Fire.$emit('AfterCreated');
+                    $('#addNewUser').modal('hide')
+                    toast.fire({
+                        type: 'success',
+                        title: 'User created successfully'
+                    });
+                    this.$Progress.finish();
+                }).catch(() => {
+                    this.$Progress.fail();
+                })
+
+
             }
         },
         created() {
-           this.loadUsers();
+            this.loadUsers();
+            Fire.$on('AfterCreated', () => {
+                this.loadUsers();
+            })
+
         }
     }
 
