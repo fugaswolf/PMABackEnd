@@ -31,18 +31,26 @@ class CustomerController extends Controller
         $request->validate([
                 'division_id' => 'integer',
                 'name' => 'required|string',
+                'comment' => 'required|string',
+                'country' => 'required|string',
+                'address' => 'required|string',
+                'phone' => 'required|string',
                 'email' => 'required|string|email|unique:customers',
-                'password' => 'required|string'
+                'status' => 'required|integer',
             ]);
             $user = new User([
-                'division_id' => $request->division,
+                'division_id' => $request->division_id,
                 'name' => $request->name,
+                'comment' => $request->comment,
+                'country' => $request->country,
+                'address' => $request->address,
+                'phone' => $request->phone,
                 'email' => $request->email,
-                'password' => bcrypt($request->password)
+                'status' => $request->status,
             ]);
             $user->save();
             return response()->json([
-                'message' => 'Successfully created user!'
+                'message' => 'Successfully created customer!'
             ], 201);
     
         }

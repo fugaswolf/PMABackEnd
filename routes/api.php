@@ -38,7 +38,10 @@ Route::group([
 
 Route::post('users/create', 'UserController@create')->middleware('auth:api');
 Route::resource('/users', 'UserController')->middleware('auth:api');
-Route::resource('/customers', 'CustomerController')->middleware('auth:api');
 Route::delete('/users/{user}', 'UserController@destroy')->middleware('auth:api');
-Route::delete('/customers/{customer}', 'CustomerController@destroy')->middleware('auth:api');
 Route::get('profile', 'UserController@profile');
+
+Route::resource('/customers', 'CustomerController')->middleware('auth:api');
+Route::post('customers/', 'CustomerController@create')->middleware('auth:api');
+Route::delete('/customers/{customer}', 'CustomerController@destroy')->middleware('auth:api');
+

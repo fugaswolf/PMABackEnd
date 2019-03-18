@@ -119,7 +119,7 @@
                                     <option value="1">Active</option>
                                     <option value="2">Inactive</option>
                                 </select>
-                                <has-error :form="form" field="division_id"></has-error>
+                                <has-error :form="form" field="status"></has-error>
                             </div>
 
                         </div>

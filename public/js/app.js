@@ -85216,7 +85216,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("has-error", {
-                          attrs: { form: _vm.form, field: "division_id" }
+                          attrs: { form: _vm.form, field: "status" }
                         })
                       ],
                       1
