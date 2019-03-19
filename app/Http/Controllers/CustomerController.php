@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
+use App\Http\Resources\CustomerResource;
 
 class CustomerController extends Controller
 {
@@ -14,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //Get users
+        //Get customers
         $customers = Customer::latest()->paginate(5);
     
         //Return collection of works as a resource
@@ -35,10 +36,10 @@ class CustomerController extends Controller
                 'country' => 'required|string',
                 'address' => 'required|string',
                 'phone' => 'required|string',
-                'email' => 'required|string|email|unique:customers',
+                'email' => 'required|string',
                 'status' => 'required|integer',
             ]);
-            $user = new User([
+            $customer = new Customer([
                 'division_id' => $request->division_id,
                 'name' => $request->name,
                 'comment' => $request->comment,
@@ -48,7 +49,7 @@ class CustomerController extends Controller
                 'email' => $request->email,
                 'status' => $request->status,
             ]);
-            $user->save();
+            $customer->save();
             return response()->json([
                 'message' => 'Successfully created customer!'
             ], 201);

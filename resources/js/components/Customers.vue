@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 mt-5">
                 <div class="card">
@@ -97,6 +97,11 @@
                             <div class="form-group">
                                 <label>Country</label>
                                 <input v-model="form.country" type="text" name="country" class="form-control" :class="{ 'is-invalid': form.errors.has('country') }">
+
+                            </div>
+                            <div class="form-group">
+                                <label>Address</label>
+                                <input v-model="form.address" type="text" name="address" class="form-control" :class="{ 'is-invalid': form.errors.has('address') }">
 
                             </div>
                             <div class="form-group">
