@@ -20,6 +20,7 @@ class CreateEntriesTable extends Migration
             $table->date('end_date');
             $table->integer('duration');
             $table->text('description');
+            $table->integer('activity_id'); // dus één entry heeft één activity eraan gelinkt, ja, maar je kan meerdere entries linken aan 1 activity?
             $table->timestamps();
         });
     }
