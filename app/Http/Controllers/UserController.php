@@ -36,13 +36,13 @@ class UserController extends Controller
     public function create(Request $request){
             
         $request->validate([
-                'division_id' => 'integer',
+                // 'division_id' => 'integer',
                 'name' => 'required|string',
                 'email' => 'required|string|email|unique:users',
                 'password' => 'required|string'
             ]);
             $user = new User([
-                'division_id' => $request->division,
+                // 'division_id' => $request->division,
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
@@ -78,6 +78,10 @@ class UserController extends Controller
         //dd($work);
         return new WorkResource($work);
         //return $this->firstOrResponse('finalworkID', $id);
+    }
+
+    public function getRole($id){
+        
     }
 
     public function profile()
