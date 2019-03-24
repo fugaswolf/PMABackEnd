@@ -8,25 +8,19 @@ class Project extends Model
 {
     protected $table = 'projects';
     protected $primaryKey = 'id';
-    protected $fillable = ['customer_id ', 'name', 'comment', 'budget', 'status'];
+    protected $fillable = ['customer_id', 'name', 'comment', 'budget', 'status'];
 
-    /**
-     * Define relation between Project and Client.
-     *
-     * @return Eloquent\Model
-     */
-    public function customer()
-    {
-        return $this->belongsTo('Customer');
+    public function customer(){
+        return $this->belongsTo(\App\Customer::class);
     }
-   
-    /**
-     * A project will have activities
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
 
-    public function customers(){
-        return $this->belongsTo('Customer','customer_id','id');
+    public function divisions()
+    {
+        return $this->hasManyThrough(\App\Division::class, \App\Customer::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(\App\Activity::class);
     }
 }

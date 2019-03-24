@@ -7,27 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $primaryKey = 'id';
+
     protected $fillable = [
-       'project_id','name','comment','status'
+       'name','comment','status'
     ];
-    protected $table = 'activities';
-    public function user(){
-        return $this->belongsTo('User');
+
+    public function entries(){
+        return $this->hasMany(\App\Entry::class); // moet het niet: hasMany? nee, toch ewel XD mdrr
     }
 
-
-    public function activable()
-    {
-        return $this->morphTo();
+    public function project() {
+        return $this->belongsTo(\App\Project::class);
     }
-    /* public function tags(){
-        return $this->belongsToMany('App\Tags','work_tags','work_id','tag_id');
-        
-    } */
-
-    /* public function scopeWhereTagsLike($query, $keyword) {
-        return $query->orWhereHas('tags', function($q) use($keyword) {
-            $q->where('tag', 'LIKE', "%{$keyword}%");
-        });
-    } */
 }

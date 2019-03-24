@@ -13,7 +13,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, HasRoles;
 
-
     protected $primaryKey = 'id';
     /**
      * The attributes that are mass assignable.
@@ -21,7 +20,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'division_id', 'name', 'email', 'password',
+        // 'division_id', 
+        'name', 'email', 'password'
     ];
 
     /**
@@ -43,19 +43,41 @@ class User extends Authenticatable
     ];
 
 
-    public function entry()
-    {
-        return $this->hasMany('App\Entry');
-    }
-
     public function division()
     {
-        return $this->hasOne('Division', 'division_id','id');
+
+        $result = static::newQuery()
+            ->rightJoin('entries', 'entries.user_id', '=', 'users.id')
+            ->rightJoin('activities', 'activities.id', '=', 'entries.activity_id')
+            ->rightJoin('projects', 'projects.id', '=', 'activities.project_id')
+            ->rightJoin('customers', 'customers.id', '=', 'projects.customer_id')
+
+            ->rightJoin('divisions', 'divisions.id', '=', 'customers.division_id')
+            ->select('divisions.*')
+            ->where('users.id', '=', $this->getAttribute('id'))
+            ->firstOrFail()
+            ->toArray();
+
+        return $result;
     }
 
+    protected function activities() {
+
+        return $this->hasManyThrough(\App\Activity::class, \App\Entry::class);
+    }
+
+
+    // Password hashen bij het wijzigen van de password
     protected function setPasswordAttribute($value) 
     { 
-        $this->attributes['password'] = Hash::make($value); 
+        $this->attributes['password'] = \Hash::needsRehash($value) ? Hash::make($value) : $value;
     }
 
+    public function projects() {
+        return $this->hasManyThrough(\App\Project::class, \App\Entry::class);
+    }
+
+    public function entries() {
+        return $this->hasMany(\App\Entry::class);
+    }
 }

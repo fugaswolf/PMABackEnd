@@ -16,9 +16,14 @@ class Customer extends Model
         'division_id', 'name', 'comment', 'country', 'address', 'phone', 'email', 'status',
     ];
 
-    public function projects(){
-        return $this->hasMany('Project');
+
+    public function project(){
+        return $this->belongsTo('App\Customer','customer_project','customer_id','project_id');
+        
     }
 
-
+    public function division()
+    {
+        return $this->belongsTo(\App\Division::class);
+    }
 }
