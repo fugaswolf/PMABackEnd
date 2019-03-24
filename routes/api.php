@@ -45,3 +45,10 @@ Route::resource('/customers', 'CustomerController')->middleware('auth:api');
 Route::post('customers/create', 'CustomerController@create')->middleware('auth:api');
 Route::delete('/customers/{customer}', 'CustomerController@destroy')->middleware('auth:api');
 
+Route::resource('/projects', 'ProjectController')->middleware('auth:api');
+Route::post('projects/create', 'ProjectController@create')->middleware('auth:api');
+Route::delete('/projects/{project}', 'ProjectController@destroy')->middleware('auth:api');
+
+Route::resource('/activities', 'ActivityController')->middleware('auth:api');
+Route::post('activities/create', 'ActivityController@create')->middleware('auth:api');
+Route::delete('/activities/{activity}', 'ActivityController@destroy')->middleware('auth:api');
