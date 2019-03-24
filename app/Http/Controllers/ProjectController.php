@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProjectResource;
 
 class ProjectController extends Controller
 {
@@ -14,7 +15,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        //Get projects
+        $projects = Project::with('customer')->latest()->paginate(5);
+    
+        //Return collection of projects as a resource
+        return ProjectResource::collection($projects);
     }
 
     /**
@@ -22,9 +27,27 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'customer_id' => 'required|integer',
+            'name' => 'required|string',
+            'comment' => 'required|string',
+            'budget' => 'required|integer',
+            'status' => 'required|integer',
+        ]);
+        $project = new Project([
+            'customer_id' => $request->customer_id,
+            'name' => $request->name,
+            'comment' => $request->comment,
+            'budget' => $request->budget,
+            'status' => $request->status,
+        ]);
+        $project->save();
+        return response()->json([
+            'message' => 'Successfully created project!'
+        ], 201);
+
     }
 
     /**
@@ -67,9 +90,13 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $id)
     {
-        //
+        //dump($request->all());
+        $project = Project::where('id', '=', $id)->firstOrFail();
+
+        $project->fill($request->all())->save();
+        return new ProjectResource($project);
     }
 
     /**
@@ -78,8 +105,10 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        return response()->json([
+            'message' => Project::where('id', '=', $id)->firstOrFail()->delete() ? 'Success.' : 'Failed.'
+        ]);
     }
 }
