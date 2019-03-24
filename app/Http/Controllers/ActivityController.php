@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Activity;
 use Illuminate\Http\Request;
+use App\Http\Resources\ActivityResource;
 
 class ActivityController extends Controller
 {
@@ -14,7 +15,11 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        //
+         //Get projects
+         $activities = Activity::with('project')->latest()->paginate(5);
+    
+         //Return collection of projects as a resource
+         return ActivityResource::collection($activities);
     }
 
     /**
@@ -22,9 +27,24 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $request->validate([
+            'project_id' => 'required|integer',
+            'name' => 'required|string',
+            'comment' => 'required|string',
+            'status' => 'required|integer',
+        ]);
+        $activity = new Activity([
+            'project_id' => $request->customer_id,
+            'name' => $request->name,
+            'comment' => $request->comment,
+            'status' => $request->status,
+        ]);
+        $activity->save();
+        return response()->json([
+            'message' => 'Successfully created activity!'
+        ], 201);
     }
 
     /**
@@ -78,8 +98,10 @@ class ActivityController extends Controller
      * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Activity $activity)
+    public function destroy($id)
     {
-        //
+        return response()->json([
+            'message' => Activity::where('id', '=', $id)->firstOrFail()->delete() ? 'Success.' : 'Failed.'
+        ]);
     }
 }
