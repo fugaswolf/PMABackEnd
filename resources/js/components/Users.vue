@@ -17,7 +17,6 @@
                             <tbody>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Division</th>
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Registered at</th>
@@ -25,7 +24,6 @@
                                 </tr>
                                 <tr v-for="user in users.data" :key="user.id">
                                     <td>{{user.id}}</td>
-                                    <td>{{user.division_id}}</td>
                                     <td>{{user.name}}</td>
                                     <td>{{user.email}}</td>
                                     <td>{{user.created_at | myDate}}</td>
@@ -65,17 +63,6 @@
 
                     <form @submit.prevent="editmode ? updateUser() : createUser()">
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label>Division ID</label>
-                                <select v-model="form.division_id" type="text" name="division_id" id="division_id" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('division_id') }">
-                                    <option value="">Choose a division</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="0">0</option>
-                                </select>
-                                <has-error :form="form" field="division_id"></has-error>
-                            </div>
                             <div class="form-group">
                                 <label>Name</label>
                                 <input v-model="form.name" type="text" name="name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
@@ -117,11 +104,9 @@
                 users: {},
                 form: new Form({
                     id:'',
-                    division_id: '',
                     name: '',
                     email: '',
                     password: '',
-                    // password_confirmation: '',
                     remember: false
                 })
             }

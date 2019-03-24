@@ -14,6 +14,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/css/app.css">
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
 
 </head>
 
@@ -31,7 +35,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- SEARCH FORM -->
             <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                        aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
                             <i class="fa fa-search"></i>
@@ -48,7 +53,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Brand Logo -->
             <a href="/home" class="brand-link">
                 <div class="image">
-                    <img src="./img/logo.png" alt="TeamTrack Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <img src="./img/logo.png" alt="TeamTrack Logo" class="brand-image img-circle elevation-3"
+                        style="opacity: .8">
                     <span class="brand-text font-weight-light">TeamTrack</span>
                 </div>
             </a>
@@ -67,7 +73,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <router-link to="/dashboard" class="nav-link">
@@ -208,7 +215,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- jQuery -->
     <script src="/js/app.js"></script>
-
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker9').datetimepicker({
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

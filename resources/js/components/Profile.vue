@@ -7,7 +7,7 @@
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-info-active">
                         <h3 class="widget-user-username">{{this.form.name}}</h3>
-                        <h5 class="widget-user-desc">Admin<br>{{this.form.division_id}}</h5>
+                        <h5 class="widget-user-desc">Admin</h5>
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle elevation-2" src="img/profile.png" alt="User Avatar">
@@ -44,7 +44,7 @@
                 </div>
                 <!-- /.widget-user -->
 
-                <div class="col-md-12">
+                <div class="">
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
