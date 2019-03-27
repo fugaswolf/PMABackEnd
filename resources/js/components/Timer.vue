@@ -2,9 +2,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 mt-5">
-                <form @submit.prevent="createActivity">
+                <form @submit.prevent="createActivity" class="form-inline">
                     <div class="form-row">
-                        <div class="col-7">
+                        <div class="col">
                             <input type="text" class="form-control" placeholder="What">
                         </div>
                         <div class="col">
@@ -13,16 +13,23 @@
                         <div class="col">
                             <input type="text" class="form-control" placeholder="Zip">
                         </div>
-                        <div class="form-group">
+
+                        <div class="col">
+                            <label>Customers</label>
+                            <input type="datetime-local" v-model="form.dateStart" class="form-control"  name="dateStart" id="meeting-time" :class="{ 'is-invalid': form.errors.has('dateStart') }">
+                        </div>
+
+                        
+                        <!-- <div class="form-group">
                             <div class="input-group date" id="datetimepicker9" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input"
+                                <input v-model="form.dateStart" type="date" name="dateStart" :class="{ 'is-invalid': form.errors.has('dateStart') }" class="form-control datetimepicker-input"
                                     data-target="#datetimepicker9" />
                                 <div class="input-group-append" data-target="#datetimepicker9"
                                     data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
                 <form @submit.prevent="editmode ? updateProject() : createProject()">
@@ -205,6 +212,7 @@
                 customers: [],
                 form: new Form({
                     id: '',
+                    dateStart: '',
                     customer_id: '',
                     name: '',
                     comment: '',

@@ -58,7 +58,7 @@
                                     <form @submit.prevent="updateInfo">
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input v-model="form.name" type="text" name="name" class="form-control"
+                                            <input v-model.lazy="form.name" type="text" name="name" class="form-control"
                                                 :class="{ 'is-invalid': form.errors.has('name') }">
 
                                         </div>

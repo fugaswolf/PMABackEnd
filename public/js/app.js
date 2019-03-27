@@ -4529,39 +4529,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      //selectedProjectId: null,
       editmode: false,
       projects: {},
-      activities: {},
-      tasks: [],
+      projectsWithActivities: {},
       form: new Form({
-        id: '',
-        project_id: '',
-        name: '',
-        comment: '',
-        status: '',
+        id: "",
+        project_id: "",
+        name: "",
+        comment: "",
+        status: "",
         remember: false
       })
     };
@@ -4571,22 +4551,22 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get('api/projects?page=' + page).then(function (response) {
-        _this.projects = response.data;
+      axios.get("api/projectsWithActivities?page=" + page).then(function (response) {
+        _this.projectsWithActivities = response.data;
       });
     },
     updateActivity: function updateActivity(id) {
       var _this2 = this;
 
       this.$Progress.start();
-      this.form.put('api/activities/' + this.form.id).then(function () {
-        swal.fire('Updated!', 'The activity\'s information is updated.', 'success'), _this2.$Progress.finish();
-        $('#addNewActivity').modal('hide');
-        Fire.$emit('AfterCreated');
+      this.form.put("api/activities/" + this.form.id).then(function () {
+        swal.fire("Updated!", "The activity's information is updated.", "success"), _this2.$Progress.finish();
+        $("#addNewActivity").modal("hide");
+        Fire.$emit("AfterCreated");
       }).catch(function () {
         _this2.$Progress.fail();
 
-        $('#addNewActivity').modal('hide');
+        $("#addNewActivity").modal("hide");
         swal.fire("Failed!", "There was something wrong.", "warning");
       });
     },
@@ -4594,31 +4574,38 @@ __webpack_require__.r(__webpack_exports__);
       this.editmode = true;
       this.form.reset();
       event.preventDefault();
-      $('#addNewActivity').modal('show');
+      $("#addNewActivity").modal("show");
       this.form.fill(activity);
     },
-    newModal: function newModal() {
-      this.editmode = false;
-      this.form.reset();
-      $('#addNewActivity').modal('show');
+    newModal: function newModal(projectId) {
+      // normaal gezien een van de twee onderste zou moeten werken 
+      // ik heb geen idee waarom het niet werkt
+      // oke wtf ik zie het al XD
+      this.form.project_id = projectId;
+      this.form.fill({
+        project_id: projectId
+      });
+      this.editmode = false; // this.form.reset();
+
+      $("#addNewActivity").modal("show");
     },
     deleteActivity: function deleteActivity(id) {
       var _this3 = this;
 
       event.preventDefault();
       swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        type: 'warning',
+        type: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
       }).then(function (result) {
         // Send request to the server
         if (result.value) {
-          _this3.form.delete('api/activities/' + id).then(function () {
-            swal.fire('Deleted!', 'Activity has been deleted.', 'success'), Fire.$emit('AfterCreated');
+          _this3.form.delete("api/activities/" + id).then(function () {
+            swal.fire("Deleted!", "Activity has been deleted.", "success"), Fire.$emit("AfterCreated");
           }).catch(function () {
             swal.fire("Failed!", "There was something wrong.", "warning");
           });
@@ -4636,9 +4623,9 @@ __webpack_require__.r(__webpack_exports__);
     loadActivities: function loadActivities() {
       var _this5 = this;
 
-      axios.get("api/activities").then(function (_ref2) {
+      axios.get("api/projectsWithActivities").then(function (_ref2) {
         var data = _ref2.data;
-        return _this5.activities = data;
+        return _this5.projectsWithActivities = data;
       }); // axios.get("api/customers").then(response => this.customers = response.data);
     },
     createActivity: function createActivity() {
@@ -4647,14 +4634,18 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start(); // Submit the form via a POST request
 
       this.form.post("api/activities/create").then(function () {
-        Fire.$emit('AfterCreated');
-        $('#addNewActivity').modal('hide');
+        Fire.$emit("AfterCreated");
+        $("#addNewActivity").modal("hide");
         toast.fire({
-          type: 'success',
-          title: 'Activity created successfully'
+          type: "success",
+          title: "Activity created successfully"
         });
 
-        _this6.$Progress.finish();
+        _this6.$Progress.finish(); // als het goed gaat, (dus de activity is aangemaakt) dan pas form reset doen?
+
+
+        _this6.form.reset(); // en als ge da modal sluit ook ? ja
+
       }).catch(function () {
         _this6.$Progress.fail();
       });
@@ -4665,9 +4656,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.loadProjects();
     this.loadActivities();
-    Fire.$on('AfterCreated', function () {
-      _this7.loadProjects();
-
+    Fire.$on("AfterCreated", function () {
       _this7.loadActivities();
     });
   }
@@ -4882,6 +4871,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4890,6 +4886,7 @@ __webpack_require__.r(__webpack_exports__);
       customers: [],
       form: new Form({
         id: '',
+        dateStart: '',
         customer_id: '',
         name: '',
         comment: '',
@@ -86274,9 +86271,10 @@ var render = function() {
                             directives: [
                               {
                                 name: "model",
-                                rawName: "v-model",
+                                rawName: "v-model.lazy",
                                 value: _vm.form.name,
-                                expression: "form.name"
+                                expression: "form.name",
+                                modifiers: { lazy: true }
                               }
                             ],
                             staticClass: "form-control",
@@ -86286,11 +86284,12 @@ var render = function() {
                             attrs: { type: "text", name: "name" },
                             domProps: { value: _vm.form.name },
                             on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(_vm.form, "name", $event.target.value)
+                              change: function($event) {
+                                return _vm.$set(
+                                  _vm.form,
+                                  "name",
+                                  $event.target.value
+                                )
                               }
                             }
                           })
@@ -87048,7 +87047,7 @@ var render = function() {
           _c(
             "div",
             { staticClass: "card-body table-responsive p-0" },
-            _vm._l(_vm.projects.data, function(project) {
+            _vm._l(_vm.projectsWithActivities.data, function(project) {
               return _c(
                 "div",
                 { key: project.id, staticClass: "col-md-12 mt-3" },
@@ -87064,10 +87063,16 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-success",
-                            on: { click: _vm.newModal }
+                            on: {
+                              click: function($event) {
+                                return _vm.newModal(project.id)
+                              }
+                            }
                           },
                           [
-                            _vm._v("Add task "),
+                            _vm._v(
+                              "\n                                        Add activity\n                                        "
+                            ),
                             _c("i", { staticClass: "fa fa-tasks fa-fw" })
                           ]
                         ),
@@ -87076,7 +87081,74 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c(
+                      "div",
+                      {
+                        staticClass: "card-body",
+                        staticStyle: { display: "block" }
+                      },
+                      [
+                        _c("table", { staticClass: "table table" }, [
+                          _c(
+                            "tbody",
+                            [
+                              _vm._m(2, true),
+                              _vm._v(" "),
+                              _vm._l(project.activities, function(activity) {
+                                return _c("tr", { key: activity.id }, [
+                                  _c("td", [_vm._v(_vm._s(activity.name))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(activity.comment))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(activity.status))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: { href: "" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.editModal(activity)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-pencil-alt blue"
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(
+                                      "\n                                                /\n                                                "
+                                    ),
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: { href: "" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteActivity(
+                                              activity.id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-trash-alt red"
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ])
+                              })
+                            ],
+                            2
+                          )
+                        ])
+                      ]
+                    )
                   ])
                 ]
               )
@@ -87089,7 +87161,7 @@ var render = function() {
             { staticClass: "card-footer" },
             [
               _c("pagination", {
-                attrs: { data: _vm.projects },
+                attrs: { data: _vm.projectsWithActivities },
                 on: { "pagination-change-page": _vm.getResults }
               })
             ],
@@ -87135,7 +87207,7 @@ var render = function() {
                     staticClass: "modal-title",
                     attrs: { id: "addNewActivity" }
                   },
-                  [_vm._v("Edit project")]
+                  [_vm._v("Edit activity")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -87152,7 +87224,7 @@ var render = function() {
                     staticClass: "modal-title",
                     attrs: { id: "addNewActivity" }
                   },
-                  [_vm._v("Add a new project")]
+                  [_vm._v("Add a new activity")]
                 ),
                 _vm._v(" "),
                 _vm._m(3)
@@ -87170,78 +87242,6 @@ var render = function() {
                 },
                 [
                   _c("div", { staticClass: "modal-body" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Customers")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.customer_id,
-                                expression: "form.customer_id"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has("customer_id")
-                            },
-                            attrs: {
-                              type: "text",
-                              name: "customer_id",
-                              id: "customer_id"
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "customer_id",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Choose a customer")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.customers.data, function(customer) {
-                              return _c(
-                                "option",
-                                {
-                                  key: customer.id,
-                                  domProps: { value: customer.id }
-                                },
-                                [_vm._v(_vm._s(customer.name))]
-                              )
-                            })
-                          ],
-                          2
-                        ),
-                        _vm._v(" "),
-                        _c("has-error", {
-                          attrs: { form: _vm.form, field: "customer_id" }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Name")]),
                       _vm._v(" "),
@@ -87291,33 +87291,6 @@ var render = function() {
                               return
                             }
                             _vm.$set(_vm.form, "comment", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Budget")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.budget,
-                            expression: "form.budget"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: { "is-invalid": _vm.form.errors.has("budget") },
-                        attrs: { type: "number", name: "budget" },
-                        domProps: { value: _vm.form.budget },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.form, "budget", $event.target.value)
                           }
                         }
                       })
@@ -87433,7 +87406,7 @@ var render = function() {
                         staticClass: "btn btn-primary",
                         attrs: { type: "submit" }
                       },
-                      [_vm._v("Create project")]
+                      [_vm._v("Create activity")]
                     )
                   ])
                 ]
@@ -87451,7 +87424,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Tasks")])
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Activities")])
     ])
   },
   function() {
@@ -87471,27 +87444,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "card-body", staticStyle: { display: "block" } },
-      [
-        _c("table", { staticClass: "table table" }, [
-          _c("tbody", [
-            _c("tr", [
-              _c("th", [_vm._v("ID")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Name")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Comment")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Status")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Modify")])
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("tr", [
+      _c("th", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Comment")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Modify")])
+    ])
   },
   function() {
     var _vm = this
@@ -87538,6 +87499,7 @@ var render = function() {
         _c(
           "form",
           {
+            staticClass: "form-inline",
             on: {
               submit: function($event) {
                 $event.preventDefault()
@@ -87545,7 +87507,46 @@ var render = function() {
               }
             }
           },
-          [_vm._m(0)]
+          [
+            _c("div", { staticClass: "form-row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "col" }, [
+                _c("label", [_vm._v("Customers")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.dateStart,
+                      expression: "form.dateStart"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.form.errors.has("dateStart") },
+                  attrs: {
+                    type: "datetime-local",
+                    name: "dateStart",
+                    id: "meeting-time"
+                  },
+                  domProps: { value: _vm.form.dateStart },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "dateStart", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ])
+          ]
         ),
         _vm._v(" "),
         _c(
@@ -87844,7 +87845,7 @@ var render = function() {
               _c(
                 "tbody",
                 [
-                  _vm._m(1),
+                  _vm._m(3),
                   _vm._v(" "),
                   _vm._l(_vm.projects.data, function(project) {
                     return _c("tr", { key: project.id }, [
@@ -87968,7 +87969,7 @@ var render = function() {
                   [_vm._v("Add a new project")]
                 ),
                 _vm._v(" "),
-                _vm._m(2)
+                _vm._m(4)
               ]),
               _vm._v(" "),
               _c(
@@ -88263,59 +88264,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-row" }, [
-      _c("div", { staticClass: "col-7" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "What" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "State" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Zip" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c(
-          "div",
-          {
-            staticClass: "input-group date",
-            attrs: { id: "datetimepicker9", "data-target-input": "nearest" }
-          },
-          [
-            _c("input", {
-              staticClass: "form-control datetimepicker-input",
-              attrs: { type: "text", "data-target": "#datetimepicker9" }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "input-group-append",
-                attrs: {
-                  "data-target": "#datetimepicker9",
-                  "data-toggle": "datetimepicker"
-                }
-              },
-              [
-                _c("div", { staticClass: "input-group-text" }, [
-                  _c("i", { staticClass: "fa fa-calendar" })
-                ])
-              ]
-            )
-          ]
-        )
-      ])
+    return _c("div", { staticClass: "col" }, [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "What" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col" }, [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "State" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col" }, [
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Zip" }
+      })
     ])
   },
   function() {
