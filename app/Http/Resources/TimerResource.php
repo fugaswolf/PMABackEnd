@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ActivityResource extends JsonResource
+class TimerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -11,7 +11,6 @@ class ActivityResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    
     public function toArray($request)
     {
         return parent::toArray($request);

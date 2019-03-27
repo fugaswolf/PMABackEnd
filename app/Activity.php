@@ -9,7 +9,7 @@ class Activity extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-       'name','comment','status'
+       'name','comment','status', 'project_id'
     ];
 
     public function entries(){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Activity;
 use Illuminate\Http\Request;
 use App\Http\Resources\ActivityResource;
+use App\Project;
 
 class ActivityController extends Controller
 {
@@ -17,9 +18,11 @@ class ActivityController extends Controller
     {
          //Get projects
          $activities = Activity::with('project')->latest()->paginate(5);
-    
-         //Return collection of projects as a resource
-         return ActivityResource::collection($activities);
+
+         $projectsWithActivities = Project::with('activities')->latest()->paginate(5);
+
+         // @TODO fix de resource later
+         return $projectsWithActivities;
     }
 
     /**
@@ -36,7 +39,7 @@ class ActivityController extends Controller
             'status' => 'required|integer',
         ]);
         $activity = new Activity([
-            'project_id' => $request->customer_id,
+            'project_id' => $request->project_id,
             'name' => $request->name,
             'comment' => $request->comment,
             'status' => $request->status,
@@ -87,9 +90,13 @@ class ActivityController extends Controller
      * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Activity $activity)
+    public function update(Request $request, $id)
     {
-        //
+         //dump($request->all());
+         $activity = Activity::where('id', '=', $id)->firstOrFail();
+
+         $activity->fill($request->all())->save();
+         return new ActivityResource($activity);
     }
 
     /**

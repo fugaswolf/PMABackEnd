@@ -8,6 +8,14 @@ use App\Http\Resources\ProjectResource;
 
 class ProjectController extends Controller
 {
+    public function indexWithActivities()
+    {
+         $projectsWithActivities = Project::with('activities')->latest()->paginate(5);
+
+         // @TODO fix de resource later
+         return $projectsWithActivities;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +24,7 @@ class ProjectController extends Controller
     public function index()
     {
         //Get projects
-        $projects = Project::with('customer')->latest()->paginate(5);
+        $projects = Project::with('customer')->latest()->paginate(10);
     
         //Return collection of projects as a resource
         return ProjectResource::collection($projects);
