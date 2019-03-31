@@ -15,7 +15,7 @@ class EntryController extends Controller
     public function index()
     {
         //Get entries
-        $entries = Entry::paginate(15);
+        $entries = Entry::paginate(5);
     
         //Return collection of entries as a resource
         return EntryResource::collection($entries);
@@ -150,53 +150,5 @@ class EntryController extends Controller
         return response()->json([
             'message' => Work::where('finalworkID', '=', $id)->firstOrFail()->delete() ? 'Success.' : 'Failed.'
         ]);
-    }
-    public function search(Request $request)
-    {
-        $works = (new Work)->newQuery()->with('tags');
-        $filterArray = $this->checkFilters($request);
-        $keywords = $this->divideSearchQuery($request);
-        $results = $works->where(function($query) use ($request, $filterArray, $keywords) {
-            $query->where($filterArray);
-            $query->where(function ($query) use ($keywords) {
-                for ($i = 0; $i < count($keywords); $i++) {
-                    $query->where('finalworkTitle', 'LIKE', '%' . $keywords[$i] . '%');
-                    $query->orWhere('finalworkDescription', 'LIKE', '%' . $keywords[$i] . '%');
-                    $query->whereTagsLike($keywords[$i]);
-                }
-            });
-        })->get();
-        return $results;
-    }
-    private function divideSearchQuery($request) {
-        if ($request->has('q')) {
-            $keyword = $request->input('q');
-            $keywords = explode(" ", $keyword);
-        } else {
-            $keywords = [];
-        }
-        return $keywords;
-    }
-    private function checkFilters($request) {
-        $filterArray = array();
-        if ($request->has('department')) {
-            array_push($filterArray, ['departement', '=', $request->Input('department')]);
-        }
-        if ($request->has('author')) {
-            array_push($filterArray, ['finalworkAuthor', 'LIKE', '%' . $request->input('author') . '%']);
-        }
-        if ($request->has('field')) {
-            array_push($filterArray, ['finalworkField', 'LIKE',  '%' . $request->input('field') . '%']);
-        }
-        if ($request->has('promotor')) {
-            array_push($filterArray, ['finalworkPromoter', 'LIKE',  '%' . $request->input('promotor') . '%']);
-        }
-        if ($request->has('maxYear') || $request->has('minYear')) {
-            $maxYear = $request->has('maxYear') == null ? ['finalworkYear', '<=', date('Y')] : ['finalworkYear', '<=', $request->input('maxYear')];
-            $minYear = $request->has('minYear') == null ? ['finalworkYear', '>=', 1980] : ['finalworkYear', '>=', $request->input('minYear')];
-            array_push($filterArray, $minYear);
-            array_push($filterArray, $maxYear);
-        }
-        return $filterArray;
     }
 }
