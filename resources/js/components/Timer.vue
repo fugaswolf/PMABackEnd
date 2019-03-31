@@ -2,107 +2,75 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 mt-5">
-                <form @submit.prevent="createActivity" class="form-inline">
-                    <div class="form-row">
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="What">
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="State">
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Zip">
-                        </div>
 
-                        <div class="col">
-                            <label>Customers</label>
-                            <input type="datetime-local" v-model="form.dateStart" class="form-control"  name="dateStart" id="meeting-time" :class="{ 'is-invalid': form.errors.has('dateStart') }">
-                        </div>
 
-                        
-                        <!-- <div class="form-group">
-                            <div class="input-group date" id="datetimepicker9" data-target-input="nearest">
-                                <input v-model="form.dateStart" type="date" name="dateStart" :class="{ 'is-invalid': form.errors.has('dateStart') }" class="form-control datetimepicker-input"
-                                    data-target="#datetimepicker9" />
-                                <div class="input-group-append" data-target="#datetimepicker9"
-                                    data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                <div class="card">
+                    <div class="card-body">
+
+                        <form @submit.prevent="createEntry">
+                            <div class="form-row align-content-center">
+                                <div class="col-sm-4">
+                                    <input v-model="form.description" type="text" placeholder="What are you doing?"
+                                        name="description" class="form-control mr-1"
+                                        :class="{ 'is-invalid': form.errors.has('description') }">
+                                </div>
+                                <div class="col-xs-2">
+                                    <select type="text" name="customer_id" id="customer_id"
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('customer_id') }">
+                                        <option value="" selected>Choose project</option>
+                                        <option v-for="project in projectsWithActivities.data" v-bind:value="project.id" :key="project.id">{{project.name}}</option>
+                                    </select>
+                                    <has-error :form="form" field="customer_id"></has-error>
+                                </div>
+                                <div class="col-xs-2">
+                                    <select v-model="form.customer_id" type="text" name="customer_id" id="customer_id"
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('customer_id') }"
+                                        place>
+                                        <option value="" selected>Choose a customer</option>
+                                        <option v-for="customer in customers.data" v-bind:value="customer.id"
+                                            :key="customer.id">{{customer.name}}</option>
+                                    </select>
+                                    <has-error :form="form" field="customer_id"></has-error>
+                                    <has-error :form="form" field="customer_id"></has-error>
+                                </div>
+
+                                <div class="col-xs-0">
+                                    <input type="datetime-local" v-model="form.dateStart" class="form-control"
+                                        name="dateStart" id="meeting-time"
+                                        :class="{ 'is-invalid': form.errors.has('dateStart') }">
+                                </div>
+                                <div class="col-xs-0">
+                                    <input type="datetime-local" v-model="form.dateEnd" class="form-control"
+                                        name="dateEnd" id="meeting-time"
+                                        :class="{ 'is-invalid': form.errors.has('dateEnd') }">
+                                </div>
+                                <div class="col-xs-1">
+                                    <button type="button" class="btn btn-primary">Add entry</button>
                                 </div>
                             </div>
-                        </div> -->
+                        </form>
                     </div>
-                </form>
-                <form @submit.prevent="editmode ? updateProject() : createProject()">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Customers</label>
-                            <select v-model="form.customer_id" type="text" name="customer_id" id="customer_id"
-                                class="form-control" :class="{ 'is-invalid': form.errors.has('customer_id') }">
-                                <option value="">Choose a customer</option>
-                                <option v-for="customer in customers.data" v-bind:value="customer.id"
-                                    :key="customer.id">{{customer.name}}</option>
-                            </select>
-                            <has-error :form="form" field="customer_id"></has-error>
-                        </div>
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input v-model="form.name" type="text" name="name" class="form-control"
-                                :class="{ 'is-invalid': form.errors.has('name') }">
+                </div>
 
-                        </div>
-                        <div class="form-group">
-                            <label>Comment</label>
-                            <textarea v-model="form.comment" type="text" name="comment" class="form-control"
-                                :class="{ 'is-invalid': form.errors.has('comment') }"></textarea>
 
-                        </div>
-                        <div class="form-group">
-                            <label>Budget</label>
-                            <input v-model="form.budget" type="number" name="budget" class="form-control"
-                                :class="{ 'is-invalid': form.errors.has('budget') }">
 
-                        </div>
 
-                        <div class="form-group">
-                            <label>Status</label>
-                            <select v-model="form.status" type="text" name="status" id="status" class="form-control"
-                                :class="{ 'is-invalid': form.errors.has('status') }">
-                                <option value="">Choose a status</option>
-                                <option value="1">Active</option>
-                                <option value="2">Inactive</option>
-                            </select>
-                            <has-error :form="form" field="status"></has-error>
-                        </div>
 
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
-                        <button v-show="!editmode" type="submit" class="btn btn-primary">Create project</button>
-                    </div>
-                </form>
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Time entries</h3>
-
-                        <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal">Add project <i
-                                    class="fa fa-folder-plus fa-fw"></i>
-                            </button>
-                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body table-responsive p-0">
                         <table class="table table">
                             <tbody>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Customer</th>
-                                    <th>Name</th>
-                                    <th>Comment</th>
-                                    <th>Budget</th>
-                                    <th>Status</th>
+                                    <th>Description</th>
+                                    <th>Project</th>
+                                    <th>Activity</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Duration</th>
                                     <th>Modify</th>
                                 </tr>
                                 <tr v-for="project in projects.data" :key="project.id">
@@ -127,7 +95,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <pagination :data="projects" @pagination-change-page="getResults"></pagination>
+                        <pagination :data="entries" @pagination-change-page="getResults"></pagination>
                     </div>
 
                 </div>
@@ -135,46 +103,42 @@
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="addNewProject" tabindex="-1" role="dialog" aria-labelledby="addNewProject"
+        <div class="modal fade" id="editProject" tabindex="-1" role="dialog" aria-labelledby="editProject"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" v-show="editmode" id="addNewProject">Edit project</h5>
-                        <h5 class="modal-title" v-show="!editmode" id="addNewProject">Add a new project</h5>
+                        <h5 class="modal-title" id="editProject">Edit entry</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
-                    <form @submit.prevent="editmode ? updateProject() : createProject()">
+                    <form @submit.prevent="updateEntry">
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Customers</label>
-                                <select v-model="form.customer_id" type="text" name="customer_id" id="customer_id"
+                                <label>Projects</label>
+                                <select type="text" name="customer_id" id="customer_id"
                                     class="form-control" :class="{ 'is-invalid': form.errors.has('customer_id') }">
-                                    <option value="">Choose a customer</option>
-                                    <option v-for="customer in customers.data" v-bind:value="customer.id"
-                                        :key="customer.id">{{customer.name}}</option>
+                                    <option value="">Choose a project</option>
+                                    <option v-for="project in projectsWithActivities.data" v-bind:value="project.id"
+                                        :key="project.id">{{project.name}}</option>
                                 </select>
                                 <has-error :form="form" field="customer_id"></has-error>
                             </div>
                             <div class="form-group">
-                                <label>Name</label>
-                                <input v-model="form.name" type="text" name="name" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('name') }">
-
+                                <label>Activities</label>
+                                <select v-model="form.activity_id" type="text" name="customer_id" id="customer_id"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('customer_id') }">
+                                    <option value="">Choose a project</option>
+                                    <option v-for="activity in project.activities" :key="activity.id" v-bind:value="activity.id">{{project.name}}</option>
+                                </select>
+                                <has-error :form="form" field="customer_id"></has-error>
                             </div>
                             <div class="form-group">
-                                <label>Comment</label>
+                                <label>Description</label>
                                 <textarea v-model="form.comment" type="text" name="comment" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('comment') }"></textarea>
-
-                            </div>
-                            <div class="form-group">
-                                <label>Budget</label>
-                                <input v-model="form.budget" type="number" name="budget" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('budget') }">
 
                             </div>
 
@@ -208,41 +172,42 @@
         data() {
             return {
                 editmode: false,
+                entries: {},
                 projects: {},
-                customers: [],
+                projectsWithActivities: {},
                 form: new Form({
                     id: '',
+                    user_id: '',
+                    activity_id: '',
                     dateStart: '',
-                    customer_id: '',
-                    name: '',
-                    comment: '',
-                    budget: '',
-                    status: '',
+                    dateEnd: '',
+                    duration: '',
+                    description: '',
                     remember: false
                 })
             }
         },
         methods: {
             getResults(page = 1) {
-                axios.get('api/projects?page=' + page)
+                axios.get('api/entries?page=' + page)
                     .then(response => {
-                        this.projects = response.data;
+                        this.entries = response.data;
                     });
             },
-            updateProject(id) {
+            updateEntry(id) {
                 this.$Progress.start();
-                this.form.put('api/projects/' + this.form.id).then(() => {
+                this.form.put('api/entries/' + this.form.id).then(() => {
                     swal.fire(
                             'Updated!',
-                            'The projects information is updated.',
+                            'The entry\'s information is updated.',
                             'success',
                         ),
                         this.$Progress.finish();
-                    $('#addNewProject').modal('hide');
+                    $('#editEntry').modal('hide');
                     Fire.$emit('AfterCreated')
                 }).catch(() => {
                     this.$Progress.fail();
-                    $('#addNewProject').modal('hide');
+                    $('#editProject').modal('hide');
                     swal.fire("Failed!", "There was something wrong.", "warning");
                 });
             },
@@ -250,15 +215,10 @@
                 this.editmode = true;
                 this.form.reset();
                 event.preventDefault();
-                $('#addNewProject').modal('show');
+                $('#editEntry').modal('show');
                 this.form.fill(project);
             },
-            newModal() {
-                this.editmode = false;
-                this.form.reset();
-                $('#addNewProject').modal('show');
-            },
-            deleteProject(id) {
+            deleteEntry(id) {
                 event.preventDefault();
                 swal.fire({
                     title: 'Are you sure?',
@@ -271,10 +231,10 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.form.delete('api/projects/' + id).then(() => {
+                        this.form.delete('api/entries/' + id).then(() => {
                             swal.fire(
                                     'Deleted!',
-                                    'Project has been deleted.',
+                                    'Entry has been deleted.',
                                     'success',
                                 ),
                                 Fire.$emit('AfterCreated')
@@ -290,21 +250,29 @@
                     data
                 }) => (this.projects = data));
             },
-            loadCustomers() {
-                axios.get("api/customers").then(({
-                    data
-                }) => (this.customers = data));
-                // axios.get("api/customers").then(response => this.customers = response.data);
+            loadActivities() {
+                axios
+                    .get("api/projectsWithActivities")
+                    .then(({
+                        data
+                    }) => (this.projectsWithActivities = data));
             },
-            createProject() {
+             loadEntries() {
+                axios
+                    .get("api/entries")
+                    .then(({
+                        data
+                    }) => (this.entries = data));
+            },
+            createEntry() {
                 this.$Progress.start();
                 // Submit the form via a POST request
-                this.form.post("api/projects/create").then(() => {
+                this.form.post("api/entries/create").then(() => {
                     Fire.$emit('AfterCreated');
-                    $('#addNewProject').modal('hide')
+                    // $('#addNewProject').modal('hide')
                     toast.fire({
                         type: 'success',
-                        title: 'Project created successfully'
+                        title: 'Entry created successfully'
                     });
                     this.$Progress.finish();
                 }).catch(() => {
@@ -316,7 +284,7 @@
         },
         created() {
             this.loadProjects();
-            this.loadCustomers();
+            this.loadEntries();
             Fire.$on('AfterCreated', () => {
                 this.loadProjects();
             })

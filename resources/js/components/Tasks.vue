@@ -37,7 +37,12 @@
                                             <tr v-for="activity in project.activities" :key="activity.id">
                                                 <td>{{activity.name}}</td>
                                                 <td>{{activity.comment}}</td>
-                                                <td>{{activity.status}}</td>
+                                                <td v-if="activity.status === 1">
+                                                    Active
+                                                </td>
+                                                <td v-else>
+                                                    Inactive
+                                                </td>
                                                 <td>
                                                     <a href @click="editModal(activity)">
                                                         <i class="fa fa-pencil-alt blue"></i>
@@ -79,7 +84,7 @@
                     </div>
 
                     <form @submit.prevent="editmode ? updateActivity() : createActivity()">
-                        <div class="modal-body"> 
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label>Name</label>
                                 <input v-model="form.name" type="text" name="name" class="form-control"

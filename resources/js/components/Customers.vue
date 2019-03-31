@@ -7,7 +7,8 @@
                         <h3 class="card-title">Customers</h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal">Add customer <i class="fa fa-user-plus fa-fw"></i>
+                            <button class="btn btn-success" @click="newModal">Add customer <i
+                                    class="fa fa-user-plus fa-fw"></i>
                             </button>
                         </div>
                     </div>
@@ -35,7 +36,12 @@
                                     <td>{{customer.address}}</td>
                                     <td>{{customer.phone}}</td>
                                     <td>{{customer.email}}</td>
-                                    <td>{{customer.status}}</td>
+                                    <td v-if="customer.status === 1">
+                                        Active
+                                    </td>
+                                    <td v-else>
+                                        Inactive
+                                    </td>
                                     <td>{{customer.created_at | myDate}}</td>
                                     <td>
                                         <a href="" @click="editModal(customer)">
@@ -54,13 +60,14 @@
                     <div class="card-footer">
                         <pagination :data="customers" @pagination-change-page="getResults"></pagination>
                     </div>
-                    
+
                 </div>
                 <!-- /.card -->
             </div>
         </div>
         <!-- Modal -->
-        <div class="modal fade" id="addNewCustomer" tabindex="-1" role="dialog" aria-labelledby="addNewCustomer" aria-hidden="true">
+        <div class="modal fade" id="addNewCustomer" tabindex="-1" role="dialog" aria-labelledby="addNewCustomer"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -75,8 +82,8 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Division ID</label>
-                                <select v-model="form.division_id" type="text" name="division_id" id="division_id" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('division_id') }">
+                                <select v-model="form.division_id" type="text" name="division_id" id="division_id"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('division_id') }">
                                     <option value="">Choose a division</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -86,36 +93,42 @@
                             </div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input v-model="form.name" type="text" name="name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                <input v-model="form.name" type="text" name="name" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('name') }">
 
                             </div>
                             <div class="form-group">
                                 <label>Comment</label>
-                                <textarea v-model="form.comment" type="text" name="comment" class="form-control" :class="{ 'is-invalid': form.errors.has('comment') }"></textarea>
+                                <textarea v-model="form.comment" type="text" name="comment" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('comment') }"></textarea>
 
                             </div>
                             <div class="form-group">
                                 <label>Country</label>
-                                <input v-model="form.country" type="text" name="country" class="form-control" :class="{ 'is-invalid': form.errors.has('country') }">
+                                <input v-model="form.country" type="text" name="country" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('country') }">
 
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
-                                <input v-model="form.address" type="text" name="address" class="form-control" :class="{ 'is-invalid': form.errors.has('address') }">
+                                <input v-model="form.address" type="text" name="address" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('address') }">
 
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input v-model="form.phone" type="number" name="phone" class="form-control" :class="{ 'is-invalid': form.errors.has('phone') }">
+                                <input v-model="form.phone" type="number" name="phone" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('phone') }">
 
                             </div>
 
                             <div class="form-group">
                                 <label>Email address</label>
-                                <input v-model="form.email" type="email" name="email" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                                <input v-model="form.email" type="email" name="email" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('email') }">
                                 <has-error :form="form" field="email"></has-error>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label>Status</label>
                                 <select v-model="form.status" type="text" name="status" id="status" class="form-control"
@@ -148,7 +161,7 @@
                 editmode: false,
                 customers: {},
                 form: new Form({
-                    id:'',
+                    id: '',
                     division_id: '',
                     name: '',
                     comment: '',
@@ -162,37 +175,37 @@
             }
         },
         methods: {
-            getResults(page = 1){
+            getResults(page = 1) {
                 axios.get('api/customers?page=' + page)
-				.then(response => {
-					this.customers = response.data;
-				});
+                    .then(response => {
+                        this.customers = response.data;
+                    });
             },
-            updateCustomer(id){
+            updateCustomer(id) {
                 this.$Progress.start();
-                this.form.put('api/customers/'+this.form.id).then(() => {
+                this.form.put('api/customers/' + this.form.id).then(() => {
                     swal.fire(
-                                    'Updated!',
-                                    'The customers information is updated.',
-                                    'success',
-                                ),
-                                this.$Progress.finish();
-                                 $('#addNewCustomer').modal('hide');
-                                Fire.$emit('AfterCreated')
+                            'Updated!',
+                            'The customers information is updated.',
+                            'success',
+                        ),
+                        this.$Progress.finish();
+                    $('#addNewCustomer').modal('hide');
+                    Fire.$emit('AfterCreated')
                 }).catch(() => {
                     this.$Progress.fail();
-                     $('#addNewCustomer').modal('hide');
+                    $('#addNewCustomer').modal('hide');
                     swal.fire("Failed!", "There was something wrong.", "warning");
                 });
             },
-            editModal(customer){
+            editModal(customer) {
                 this.editmode = true;
                 this.form.reset();
                 event.preventDefault();
                 $('#addNewCustomer').modal('show');
                 this.form.fill(customer);
             },
-            newModal(){
+            newModal() {
                 this.editmode = false;
                 this.form.reset();
                 $('#addNewCustomer').modal('show');

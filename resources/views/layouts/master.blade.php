@@ -15,18 +15,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/css/app.css">
 
-    <!-- @TODO mss includen via npm/yarn ofzo ? -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" 
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" 
-        integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
-    <!-- -->
-
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js">
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
-
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -222,37 +210,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <!-- wat doet da hier ? die datetimepicker.datetimepicker shet, eigelijk is dit voor de Timer pagina, ik heb da geinclude, zodat ik het niet in de Timer.vue moet doen
-    eigelijk worden de vue components in deze master.blade.php ingeladen (Single page app, denk ik)-->
     <script src="/js/app.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker9').datetimepicker({
-                icons: {
-                    time: "fa fa-clock-o",
-                    date: "fa fa-calendar",
-                    up: "fa fa-arrow-up",
-                    down: "fa fa-arrow-down"
-                }
-            });
-        });
-
-        /*
-        $(document).ready(function(){
-            //$("#example1").datepicker();
-            
-            $('#datetimepicker9').datetimepicker({
-                icons: {
-                    time: "fa fa-clock-o",
-                    date: "fa fa-calendar",
-                    up: "fa fa-arrow-up",
-                    down: "fa fa-arrow-down"
-                }
-            });
-            
-        });
-        */
-    </script>
+  
 </body>
 
 </html>

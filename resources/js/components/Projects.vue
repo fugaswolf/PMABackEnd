@@ -31,7 +31,12 @@
                                     <td>{{project.name}}</td>
                                     <td>{{project.comment}}</td>
                                     <td>{{project.budget}}</td>
-                                    <td>{{project.status}}</td>
+                                    <td v-if="project.status === 1">
+                                        Active
+                                    </td>
+                                    <td v-else>
+                                        Inactive
+                                    </td>
                                     <td>
                                         <a href="" @click="editModal(project)">
                                             <i class="fa fa-pencil-alt blue"></i>
