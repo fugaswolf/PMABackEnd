@@ -54,3 +54,7 @@ Route::resource('/activities', 'ActivityController')->middleware('auth:api');
 Route::post('activities/create', 'ActivityController@create')->middleware('auth:api');
 Route::delete('/activities/{activity}', 'ActivityController@destroy')->middleware('auth:api');
 
+Route::resource('/entries', 'ActivityController')->middleware('auth:api');
+Route::post('entries/create', 'ActivityController@create')->middleware('auth:api');
+Route::delete('/entries/{entry}', 'ActivityController@destroy')->middleware('auth:api');
+
