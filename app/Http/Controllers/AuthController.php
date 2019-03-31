@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+
+
 class AuthController extends Controller
 {
     /**
@@ -15,6 +18,7 @@ class AuthController extends Controller
      * @param  [string] password_confirmation
      * @return [string] message
      */
+
     public function signup(Request $request)
     {
         $request->validate([
@@ -32,11 +36,6 @@ class AuthController extends Controller
             'message' => 'Successfully created user!'
         ], 201);
     }
-  
-    // mijn eigen functie, deze moet de admin recht geven op een user aan te maken (eens hij ingelogd is)
-
-    // ik denkt da het 'integer' is in de plaats van 
-    
     /**
      * Login user and create token
      *
@@ -47,6 +46,7 @@ class AuthController extends Controller
      * @return [string] token_type
      * @return [string] expires_at
      */
+
     public function login(Request $request)
     {
         $request->validate([
@@ -73,12 +73,12 @@ class AuthController extends Controller
             )->toDateTimeString()
         ]);
     }
-  
     /**
      * Logout user (Revoke the token)
      *
      * @return [string] message
      */
+
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
@@ -86,14 +86,15 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
-  
     /**
      * Get the authenticated User
      *
      * @return [json] user object
      */
+    
     public function user(Request $request)
     {
         return response()->json($request->user());
     }
+
 }
