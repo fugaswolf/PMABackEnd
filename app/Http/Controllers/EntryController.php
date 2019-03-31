@@ -15,7 +15,7 @@ class EntryController extends Controller
     public function index()
     {
         //Get entries
-        $entries = Entry::paginate(5);
+        $entries = Entry::paginate(10);
     
         //Return collection of entries as a resource
         return EntryResource::collection($entries);
