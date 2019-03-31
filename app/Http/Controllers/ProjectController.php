@@ -75,9 +75,11 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($id)
     {
-        //
+        $project = Project::where('id', '=', $id)->firstOrFail();
+        return new ProjectResource($project);
+   
     }
 
     /**
