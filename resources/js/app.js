@@ -10,6 +10,9 @@ window.Vue = require('vue');
 import moment from 'moment';
 import { Form, HasError, AlertError } from 'vform';
 
+import DatePicker from 'vue2-datepicker';
+window.DatePicker = DatePicker;
+
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
