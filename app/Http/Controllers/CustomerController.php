@@ -73,9 +73,10 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(Customer $customer)
+    public function show($id)
     {
-        //
+        $customer = Customer::where('id', '=', $id)->firstOrFail();
+        return new CustomerResource($customer);
     }
 
     /**
