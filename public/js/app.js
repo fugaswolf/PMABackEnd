@@ -4863,8 +4863,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4985,9 +4983,12 @@ __webpack_require__.r(__webpack_exports__);
     var _this8 = this;
 
     this.loadProjects();
+    this.loadActivities();
     this.loadEntries();
     Fire.$on('AfterCreated', function () {
       _this8.loadProjects();
+
+      _this8.loadEntries();
     });
   }
 });
@@ -87566,6 +87567,40 @@ var render = function() {
                     "div",
                     { staticClass: "col-xs-2" },
                     [
+                      _c(
+                        "select",
+                        {
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("project")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "project",
+                            id: "project"
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "", selected: "" } }, [
+                            _vm._v("Choose project")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.projectsWithActivities.data, function(
+                            project
+                          ) {
+                            return _c(
+                              "option",
+                              {
+                                key: project.id,
+                                domProps: { value: project.id }
+                              },
+                              [_vm._v(_vm._s(project.name))]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
                       _c("has-error", {
                         attrs: { form: _vm.form, field: "project" }
                       })
@@ -87665,19 +87700,17 @@ var render = function() {
                 [
                   _vm._m(2),
                   _vm._v(" "),
-                  _vm._l(_vm.projects.data, function(project) {
-                    return _c("tr", { key: project.id }, [
-                      _c("td", [_vm._v(_vm._s(project.id))]),
+                  _vm._l(_vm.entries.data, function(entry) {
+                    return _c("tr", { key: entry.id }, [
+                      _c("td", [_vm._v(_vm._s(entry.id))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(project.customer.name))]),
+                      _c("td", [_vm._v(_vm._s(entry.description))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(project.name))]),
+                      _c("td", [_vm._v(_vm._s(entry.dateStart))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(project.comment))]),
+                      _c("td", [_vm._v(_vm._s(entry.dateEnd))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(project.budget))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(project.status))]),
+                      _c("td", [_vm._v(_vm._s(entry.duration))]),
                       _vm._v(" "),
                       _c("td", [
                         _c(
@@ -87686,7 +87719,7 @@ var render = function() {
                             attrs: { href: "" },
                             on: {
                               click: function($event) {
-                                return _vm.editModal(project)
+                                return _vm.editModal(_vm.project)
                               }
                             }
                           },
@@ -87701,7 +87734,7 @@ var render = function() {
                             attrs: { href: "" },
                             on: {
                               click: function($event) {
-                                return _vm.deleteProject(project.id)
+                                return _vm.deleteProject(_vm.project.id)
                               }
                             }
                           },
@@ -87777,12 +87810,12 @@ var render = function() {
                           {
                             staticClass: "form-control",
                             class: {
-                              "is-invalid": _vm.form.errors.has("customer_id")
+                              "is-invalid": _vm.form.errors.has("project")
                             },
                             attrs: {
                               type: "text",
-                              name: "customer_id",
-                              id: "customer_id"
+                              name: "project",
+                              id: "projectd"
                             }
                           },
                           [
@@ -87807,7 +87840,7 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("has-error", {
-                          attrs: { form: _vm.form, field: "customer_id" }
+                          attrs: { form: _vm.form, field: "project" }
                         })
                       ],
                       1
@@ -87820,7 +87853,7 @@ var render = function() {
                         _c("label", [_vm._v("Activities")]),
                         _vm._v(" "),
                         _c("has-error", {
-                          attrs: { form: _vm.form, field: "customer_id" }
+                          attrs: { form: _vm.form, field: "activity_id" }
                         })
                       ],
                       1
@@ -88001,15 +88034,13 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
       _c("th", [_vm._v("Description")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Project")]),
+      _c("th", [_vm._v("Date Start")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Activity")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Start")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("End")]),
+      _c("th", [_vm._v("Date End")]),
       _vm._v(" "),
       _c("th", [_vm._v("Duration")]),
       _vm._v(" "),
