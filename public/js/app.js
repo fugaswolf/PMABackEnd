@@ -87566,42 +87566,8 @@ var render = function() {
                     "div",
                     { staticClass: "col-xs-2" },
                     [
-                      _c(
-                        "select",
-                        {
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.form.errors.has("customer_id")
-                          },
-                          attrs: {
-                            type: "text",
-                            name: "customer_id",
-                            id: "customer_id"
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "", selected: "" } }, [
-                            _vm._v("Choose project")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.projectsWithActivities.data, function(
-                            project
-                          ) {
-                            return _c(
-                              "option",
-                              {
-                                key: project.id,
-                                domProps: { value: project.id }
-                              },
-                              [_vm._v(_vm._s(project.name))]
-                            )
-                          })
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
                       _c("has-error", {
-                        attrs: { form: _vm.form, field: "customer_id" }
+                        attrs: { form: _vm.form, field: "project" }
                       })
                     ],
                     1
@@ -87611,78 +87577,16 @@ var render = function() {
                     "div",
                     { staticClass: "col-xs-2" },
                     [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.customer_id,
-                              expression: "form.customer_id"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.form.errors.has("customer_id")
-                          },
-                          attrs: {
-                            type: "text",
-                            name: "customer_id",
-                            id: "customer_id",
-                            place: ""
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.form,
-                                "customer_id",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "", selected: "" } }, [
-                            _vm._v("Choose a customer")
-                          ]),
-                          _vm._v(" "),
-                          _vm._l(_vm.customers.data, function(customer) {
-                            return _c(
-                              "option",
-                              {
-                                key: customer.id,
-                                domProps: { value: customer.id }
-                              },
-                              [_vm._v(_vm._s(customer.name))]
-                            )
-                          })
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
                       _c("has-error", {
-                        attrs: { form: _vm.form, field: "customer_id" }
-                      }),
-                      _vm._v(" "),
-                      _c("has-error", {
-                        attrs: { form: _vm.form, field: "customer_id" }
+                        attrs: { form: _vm.form, field: "activity_id" }
                       })
                     ],
                     1
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-xs-0" }, [
+                    _c("label", [_vm._v("Start")]),
+                    _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
@@ -87712,6 +87616,10 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-xs-0" }, [
+                    _c("label", { staticClass: "form-inline" }, [
+                      _vm._v("End")
+                    ]),
+                    _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
@@ -87910,65 +87818,6 @@ var render = function() {
                       { staticClass: "form-group" },
                       [
                         _c("label", [_vm._v("Activities")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.activity_id,
-                                expression: "form.activity_id"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has("customer_id")
-                            },
-                            attrs: {
-                              type: "text",
-                              name: "customer_id",
-                              id: "customer_id"
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "activity_id",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Choose a project")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.project.activities, function(activity) {
-                              return _c(
-                                "option",
-                                {
-                                  key: activity.id,
-                                  domProps: { value: activity.id }
-                                },
-                                [_vm._v(_vm._s(_vm.project.name))]
-                              )
-                            })
-                          ],
-                          2
-                        ),
                         _vm._v(" "),
                         _c("has-error", {
                           attrs: { form: _vm.form, field: "customer_id" }

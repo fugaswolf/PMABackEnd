@@ -15,31 +15,31 @@
                                         :class="{ 'is-invalid': form.errors.has('description') }">
                                 </div>
                                 <div class="col-xs-2">
-                                    <select type="text" name="customer_id" id="customer_id"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('customer_id') }">
+                                    <!-- <select type="text" name="project" id="project"
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('project') }">
                                         <option value="" selected>Choose project</option>
                                         <option v-for="project in projectsWithActivities.data" v-bind:value="project.id" :key="project.id">{{project.name}}</option>
-                                    </select>
-                                    <has-error :form="form" field="customer_id"></has-error>
+                                    </select> -->
+                                    <has-error :form="form" field="project"></has-error>
                                 </div>
                                 <div class="col-xs-2">
-                                    <select v-model="form.customer_id" type="text" name="customer_id" id="customer_id"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('customer_id') }"
+                                    <!-- <select v-model="form.activity_id" type="text" name="activity_id" id="activity_id"
+                                        class="form-control" :class="{ 'is-invalid': form.errors.has('activity_id') }"
                                         place>
-                                        <option value="" selected>Choose a customer</option>
-                                        <option v-for="customer in customers.data" v-bind:value="customer.id"
-                                            :key="customer.id">{{customer.name}}</option>
-                                    </select>
-                                    <has-error :form="form" field="customer_id"></has-error>
-                                    <has-error :form="form" field="customer_id"></has-error>
+                                        <option value="" selected>Choose an activity</option>
+                                        <option v-for="activity in project.activities" :key="activity.id" v-bind:value="activity.id">{{activity.name}}</option>
+                                    </select> -->
+                                    <has-error :form="form" field="activity_id"></has-error>
                                 </div>
 
                                 <div class="col-xs-0">
+                                    <label>Start</label>
                                     <input type="datetime-local" v-model="form.dateStart" class="form-control"
                                         name="dateStart" id="meeting-time"
                                         :class="{ 'is-invalid': form.errors.has('dateStart') }">
                                 </div>
                                 <div class="col-xs-0">
+                                    <label class="form-inline">End</label>
                                     <input type="datetime-local" v-model="form.dateEnd" class="form-control"
                                         name="dateEnd" id="meeting-time"
                                         :class="{ 'is-invalid': form.errors.has('dateEnd') }">
@@ -128,11 +128,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Activities</label>
-                                <select v-model="form.activity_id" type="text" name="customer_id" id="customer_id"
+                                <!-- <select v-model="form.activity_id" type="text" name="customer_id" id="customer_id"
                                     class="form-control" :class="{ 'is-invalid': form.errors.has('customer_id') }">
                                     <option value="">Choose a project</option>
                                     <option v-for="activity in project.activities" :key="activity.id" v-bind:value="activity.id">{{project.name}}</option>
-                                </select>
+                                </select> -->
                                 <has-error :form="form" field="customer_id"></has-error>
                             </div>
                             <div class="form-group">
