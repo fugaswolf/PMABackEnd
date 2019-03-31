@@ -16,11 +16,11 @@ class CreateEntriesTable extends Migration
         Schema::create('entries', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->integer('duration');
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
+            $table->time('duration');
             $table->text('description');
-            $table->integer('activity_id'); // dus één entry heeft één activity eraan gelinkt, ja, maar je kan meerdere entries linken aan 1 activity?
+            $table->integer('activity_id');
             $table->timestamps();
         });
     }
