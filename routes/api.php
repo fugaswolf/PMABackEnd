@@ -47,6 +47,7 @@ Route::delete('/customers/{customer}', 'CustomerController@destroy')->middleware
 
 Route::resource('/projects', 'ProjectController')->middleware('auth:api');
 Route::get('/projectsWithActivities', 'ProjectController@indexWithActivities')->middleware('auth:api');
+Route::post('/projects/{id}', 'ProjectController@show')->middleware('auth:api');
 Route::post('projects/create', 'ProjectController@create')->middleware('auth:api');
 Route::delete('/projects/{project}', 'ProjectController@destroy')->middleware('auth:api');
 
