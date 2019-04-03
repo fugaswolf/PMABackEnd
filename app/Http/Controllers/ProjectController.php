@@ -30,6 +30,13 @@ class ProjectController extends Controller
         return ProjectResource::collection($projects);
     }
 
+    public function showByProject($id)
+    {
+         $projectWithActivities = Project::with('activities')->firstOrFail($id);
+         // @TODO fix de resource later
+         return $projectWithActivities;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -77,10 +84,14 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $project = Project::where('id', '=', $id)->firstOrFail();
+        $project = Project::with('activities')->where('id', '=', $id)->firstOrFail();
         return new ProjectResource($project);
-   
     }
+
+    // public function showByProject($id){
+    //     $project = Project::with('activity')->firstOrFail($id);
+    //     return ProjectResource::getActivities($project);
+    // }
 
     /**
      * Show the form for editing the specified resource.
