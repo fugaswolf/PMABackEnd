@@ -36,7 +36,7 @@ class EntryController extends Controller
         ]);
         $entry = new Entry([
             'activity_id' => $request->activity_id,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user()->id,
             'description' => $request->description,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
