@@ -13,7 +13,7 @@ class Activity extends Model
     ];
 
     public function entries(){
-        return $this->hasMany(\App\Entry::class); // moet het niet: hasMany? nee, toch ewel XD mdrr
+        return $this->hasMany(\App\Entry::class);
     }
 
     public function project() {
