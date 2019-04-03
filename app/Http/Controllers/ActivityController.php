@@ -17,7 +17,7 @@ class ActivityController extends Controller
     public function index()
     {
          //Get projects
-         $activities = Activity::with('project')->latest()->paginate(5);
+        //  $activities = Activity::with('project')->latest()->paginate(5);
 
          $projectsWithActivities = Project::with('activities')->latest()->paginate(5);
 
@@ -71,6 +71,12 @@ class ActivityController extends Controller
     {
         $activity = Activity::where('id', '=', $id)->firstOrFail();
         return new ActivityResource($activity);
+    }
+
+    public function showActivitiesByProject($id)
+    {
+        $activities = Activity::where('project_id', '=', $id)->get();
+        return new ActivityResource($activities);
     }
 
     /**
