@@ -67,9 +67,10 @@ class ActivityController extends Controller
      * @param  \App\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show(Activity $activity)
+    public function show($id)
     {
-        //
+        $activity = Activity::where('id', '=', $id)->firstOrFail();
+        return new ActivityResource($activity);
     }
 
     /**
