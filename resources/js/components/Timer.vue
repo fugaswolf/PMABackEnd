@@ -175,7 +175,7 @@
                 projectsWithActivities: {},
                 form: new Form({
                     id: '',
-                    user_id: '',
+                    // user_id: '',
                     activity_id: '',
                     dateStart: '',
                     dateEnd: '',
