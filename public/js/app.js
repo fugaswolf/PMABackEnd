@@ -4870,9 +4870,10 @@ __webpack_require__.r(__webpack_exports__);
       entries: {},
       projects: {},
       projectsWithActivities: {},
+      activities: {},
       form: new Form({
         id: '',
-        user_id: '',
+        // user_id: '',
         activity_id: '',
         dateStart: '',
         dateEnd: '',
@@ -4952,16 +4953,24 @@ __webpack_require__.r(__webpack_exports__);
         return _this5.projectsWithActivities = data;
       });
     },
-    loadEntries: function loadEntries() {
+    activities: function activities(id) {
       var _this6 = this;
 
-      axios.get("api/entries").then(function (_ref3) {
+      axios.get('api/activities/' + id).then(function (_ref3) {
         var data = _ref3.data;
-        return _this6.entries = data;
+        return _this6.activities = data;
+      });
+    },
+    loadEntries: function loadEntries() {
+      var _this7 = this;
+
+      axios.get("api/entries").then(function (_ref4) {
+        var data = _ref4.data;
+        return _this7.entries = data;
       });
     },
     createEntry: function createEntry() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.$Progress.start(); // Submit the form via a POST request
 
@@ -4973,22 +4982,22 @@ __webpack_require__.r(__webpack_exports__);
           title: 'Entry created successfully'
         });
 
-        _this7.$Progress.finish();
+        _this8.$Progress.finish();
       }).catch(function () {
-        _this7.$Progress.fail();
+        _this8.$Progress.fail();
       });
     }
   },
   created: function created() {
-    var _this8 = this;
+    var _this9 = this;
 
     this.loadProjects();
     this.loadActivities();
     this.loadEntries();
     Fire.$on('AfterCreated', function () {
-      _this8.loadProjects();
+      _this9.loadProjects();
 
-      _this8.loadEntries();
+      _this9.loadEntries();
     });
   }
 });
@@ -87532,7 +87541,7 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "form-row align-content-center" }, [
-                  _c("div", { staticClass: "col-sm-4" }, [
+                  _c("div", { staticClass: "col-sm-3" }, [
                     _c("input", {
                       directives: [
                         {
@@ -87565,7 +87574,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "col-xs-2" },
+                    { staticClass: "col-xs-1" },
                     [
                       _c(
                         "select",
@@ -87585,9 +87594,7 @@ var render = function() {
                             _vm._v("Choose project")
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.projectsWithActivities.data, function(
-                            project
-                          ) {
+                          _vm._l(_vm.projects.data, function(project) {
                             return _c(
                               "option",
                               {
@@ -87610,8 +87617,68 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "col-xs-2" },
+                    { staticClass: "col-xs-1" },
                     [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.activity_id,
+                              expression: "form.activity_id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.form.errors.has("activity_id")
+                          },
+                          attrs: {
+                            type: "text",
+                            name: "activity_id",
+                            id: "activity_id",
+                            place: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.form,
+                                "activity_id",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "", selected: "" } }, [
+                            _vm._v("Choose an activity")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.activities, function(activity) {
+                            return _c(
+                              "option",
+                              {
+                                key: (activity.project_id = _vm.project.id),
+                                domProps: { value: activity.id }
+                              },
+                              [_vm._v(_vm._s(activity.name))]
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
                       _c("has-error", {
                         attrs: { form: _vm.form, field: "activity_id" }
                       })
@@ -87823,9 +87890,7 @@ var render = function() {
                               _vm._v("Choose a project")
                             ]),
                             _vm._v(" "),
-                            _vm._l(_vm.projectsWithActivities.data, function(
-                              project
-                            ) {
+                            _vm._l(_vm.projects.data, function(project) {
                               return _c(
                                 "option",
                                 {
@@ -87851,6 +87916,71 @@ var render = function() {
                       { staticClass: "form-group" },
                       [
                         _c("label", [_vm._v("Activities")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.activity_id,
+                                expression: "form.activity_id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("activity_id")
+                            },
+                            attrs: {
+                              type: "text",
+                              name: "activity_id",
+                              id: "activity_id"
+                            },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.form,
+                                    "activity_id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function($event) {
+                                  return _vm.activities(_vm.project.project.id)
+                                }
+                              ]
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Choose an activity")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.activities, function(activity) {
+                              return _c(
+                                "option",
+                                {
+                                  key: activity.id,
+                                  domProps: { value: activity.id }
+                                },
+                                [_vm._v(_vm._s(activity.name))]
+                              )
+                            })
+                          ],
+                          2
+                        ),
                         _vm._v(" "),
                         _c("has-error", {
                           attrs: { form: _vm.form, field: "activity_id" }
