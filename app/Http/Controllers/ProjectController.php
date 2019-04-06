@@ -32,8 +32,10 @@ class ProjectController extends Controller
 
     public function showByProject($id)
     {
-         $projectWithActivities = Project::with('activities')->firstOrFail($id);
-         // @TODO fix de resource later
+
+        $projectWithActivities = Project::with('activities')->firstOrFail($id);
+         
+         // return alleen de activiteiten
          return $projectWithActivities;
     }
 
@@ -42,6 +44,7 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function create(Request $request)
     {
         $request->validate([
@@ -71,9 +74,28 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'customer_id' => 'required|integer',
+        //     'name' => 'required|string',
+        //     'comment' => 'required|string',
+        //     'budget' => 'required|integer',
+        //     'status' => 'required|integer',
+        // ]);
+        // $project = new Project([
+        //     'customer_id' => $request->customer_id,
+        //     'name' => $request->name,
+        //     'comment' => $request->comment,
+        //     'budget' => $request->budget,
+        //     'status' => $request->status,
+        // ]);
+        // $project->save();
+        // return response()->json([
+        //     'message' => 'Successfully created project!'
+        // ], 201);
+
     }
 
     /**
