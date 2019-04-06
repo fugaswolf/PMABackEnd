@@ -73,10 +73,15 @@ class ActivityController extends Controller
         return new ActivityResource($activity);
     }
 
-    public function showActivitiesByProject($id)
+    public function showActivitiesByProject(/*$id*/Request $request)
     {
-        $activities = Activity::where('project_id', '=', $id)->get();
-        return new ActivityResource($activities);
+        // $activities = Activity::where('project_id', '=', $id)->get();
+        // return new ActivityResource($activities);
+
+        $projectWithActivities = Activity::where('project_id', '=', $request->input('project_id'))->get();
+         
+        // return alleen de activiteiten
+        return $projectWithActivities;
     }
 
     /**
