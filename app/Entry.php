@@ -8,15 +8,17 @@ class Entry extends Model
 {
     protected $primaryKey = 'id';
 
-    // @TODO
     protected $fillable = [
         'activity_id', 'user_id', 'start_date', 'end_date', 'duration', 'description'
     ];
 
-    public function duration($start, $end){
-        $duration = $end->diff($start)->format('%H:%I:%s');
+    public static function parseDuration($start, $end) {
 
-        $this->attributes['duration'] = $duration;
+        $duration = Carbon::parse($end)->diff(Carbon::parse($start))->format('%H:%I');
+
+        // dd($duration);
+
+        return $duration;
     }
 
     public function user(){
