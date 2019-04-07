@@ -119,7 +119,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Projects</label>
-                                <select type="text" v-model="form.project_id" name="project_id" id="project_id" v-on:change="projectSelected($event)"
+                                <select type="text" v-model.lazy="form.project_id" name="project_id" id="project_id" v-on:change="projectSelected($event)"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('project_id') }">
                                         <option value="" selected>Choose project</option>
                                         <option v-for="project in projects.data" v-bind:value="project.id" :key="project.id">{{project.name}}</option>
@@ -128,7 +128,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Activities</label>
-                                 <select v-model="form.activity_id" type="text" name="activity_id" id="activity_id"
+                                 <select v-model.lazy="form.activity_id" type="text" name="activity_id" id="activity_id"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('activity_id') }"
                                         place>
                                         <option value="" selected>Choose an activity</option>
