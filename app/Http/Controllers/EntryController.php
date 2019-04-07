@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Entry;
+use App\Http\Resources\EntryResource;
+use Auth;
 
 class EntryController extends Controller
 {
@@ -25,49 +27,33 @@ class EntryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
+        $user = Auth::user();
         $request->validate([
             'activity_id' => 'integer|required',
-            'user_id' => 'integer|required',
             'description' => 'required|string',
             'start_date' => 'required|string',
             'end_date' => 'required|string',
+            'duration' => 'nullable|string'
         ]);
-        $entry = new Entry([
+
+        $duration = $request->has('duration') && !is_null($request->input('duration')) ? : Entry::parseDuration($request->input('start_date'), $request->input('end_date'));
+        
+        (new Entry)->create([
             'activity_id' => $request->activity_id,
-            'user_id' => $request->user()->id,
+            'user_id' => $user->id,
             'description' => $request->description,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'duration' => $entry->duration($request->start_date, $request->end_date)
+            'duration' => $duration
         ]);
-        $entry->save();
+        
         return response()->json([
             'message' => 'Successfully created entry!'
         ], 201);
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    
-    public function store(Request $request)
-    {
-            $work = (new Work)->fill([
-            'user_id'=> \Auth::user()->id,
-            'start_time'=> $request->input('start_time'),
-            'end_time'=> $request->input('end_time'),
-            'duration'=> $request->input('duration'),
-            'description' => $request->input('description'),
-        ]);
-        
-        $work->save();
-        return "succes";
 
-    }
     public function firstOrResponse($field, $value) {
         return ($entry = Entry::where($field, 'LIKE', $value)->get()) instanceof Entry ?
             new EntryResource($entry) : response()->json([
@@ -88,9 +74,11 @@ class EntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $entry = Entry::where('id', '=', $id)->firstOrFail();
+        $user = Auth::user();
+        $entry = Entry::where('user_id', '=', $user->id)->latest()->paginate(15);
+        // dd($entry);
         return new EntryResource($entry);
     }
 
