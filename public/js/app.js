@@ -104674,7 +104674,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
 
 });
 Vue.filter('myDate', function (created) {
-  return moment__WEBPACK_IMPORTED_MODULE_0___default()(created).format('MMMM Do YYYY, h:mm:ss a');
+  return moment__WEBPACK_IMPORTED_MODULE_0___default()(created).format('MMMM Do YYYY, h:mm:ss');
 });
 window.Fire = new Vue();
 /**

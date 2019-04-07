@@ -89,7 +89,7 @@ const router = new VueRouter({
 })
 
 Vue.filter('myDate', function(created){
-    return moment(created).format('MMMM Do YYYY, h:mm:ss a');
+    return moment(created).format('MMMM Do YYYY, h:mm:ss');
 });
 
 window.Fire = new Vue();
