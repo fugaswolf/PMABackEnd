@@ -88039,9 +88039,10 @@ var render = function() {
                             directives: [
                               {
                                 name: "model",
-                                rawName: "v-model",
+                                rawName: "v-model.lazy",
                                 value: _vm.form.project_id,
-                                expression: "form.project_id"
+                                expression: "form.project_id",
+                                modifiers: { lazy: true }
                               }
                             ],
                             staticClass: "form-control",
@@ -88116,9 +88117,10 @@ var render = function() {
                           directives: [
                             {
                               name: "model",
-                              rawName: "v-model",
+                              rawName: "v-model.lazy",
                               value: _vm.form.activity_id,
-                              expression: "form.activity_id"
+                              expression: "form.activity_id",
+                              modifiers: { lazy: true }
                             }
                           ],
                           staticClass: "form-control",
