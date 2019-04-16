@@ -19,6 +19,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Role</th>
                                     <th>Registered at</th>
                                     <th>Modify</th>
                                 </tr>
@@ -26,6 +27,7 @@
                                     <td>{{user.id}}</td>
                                     <td>{{user.name}}</td>
                                     <td>{{user.email}}</td>
+                                    <td>{{user.roles.name}}</td>
                                     <td>{{user.created_at | myDate}}</td>
                                     <td>
                                         <a href="" @click="editModal(user)">
@@ -63,6 +65,19 @@
 
                     <form @submit.prevent="editmode ? updateUser() : createUser()">
                         <div class="modal-body">
+                            <div class="form-group">
+                                <label>Role</label>
+                                <select v-model="form.role" type="text" name="role" id="role"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('role') }">
+                                    <option>Choose a role</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="worker">Worker</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="hr">HR</option>
+                                    <option value="consultant">Consultant</option>
+                                </select>
+                                <has-error :form="form" field="role"></has-error>
+                            </div>
                             <div class="form-group">
                                 <label>Name</label>
                                 <input v-model="form.name" type="text" name="name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
@@ -104,6 +119,7 @@
                 users: {},
                 form: new Form({
                     id:'',
+                    roles: '',
                     name: '',
                     email: '',
                     password: '',
@@ -141,6 +157,15 @@
                 event.preventDefault();
                 $('#addNewUser').modal('show');
                 this.form.fill(user);
+                const role = this.getRoleName(user);
+
+                //var element = document.getElementById(id);
+                //element.value = valueToSelect;
+
+                // https://stackoverflow.com/questions/43839066/how-can-i-set-selected-option-selected-in-vue-js-2
+            },
+            getRoleName(user) {
+                return user.roles[0].name;
             },
             newModal(){
                 this.editmode = false;
