@@ -13,6 +13,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, HasRoles;
 
+    // dit zal mss alles breken
+    protected $with = [
+        'roles'
+    ];
+
     protected $primaryKey = 'id';
     /**
      * The attributes that are mass assignable.
@@ -59,6 +64,81 @@ class User extends Authenticatable
             ->toArray();
 
         return $result;
+    }
+
+    protected static function makeAdmin($user){
+        $user->assignRole('admin');
+        unmakeConsultant($user);
+        unmakeHR($user);
+        unmakeManager($user);
+        unmakeWorker($user);
+    }
+
+    protected static function makeConsultant($user){
+        $user->assignRole('consultant');
+        unmakeAdmin($user);
+        unmakeHR($user);
+        unmakeManager($user);
+        unmakeWorker($user);
+    }
+
+    protected static function makeHR($user){
+        $user->assignRole('hr');
+        unmakeConsultant($user);
+        unmakeAdmin($user);
+        unmakeManager($user);
+        unmakeWorker($user);
+    }
+
+    protected static function makeManager($user){
+        $user->assignRole('manager');
+        unmakeConsultant($user);
+        unmakeHR($user);
+        unmakeAdmin($user);
+        unmakeWorker($user);
+    }
+    protected static function makeWorker($user){
+        $user->assignRole('worker');
+        unmakeConsultant($user);
+        unmakeHR($user);
+        unmakeManager($user);
+        unmakeAdmin($user);
+    }
+
+    protected static function unmakeAdmin($user){
+        if($user->hasRole('admin')){
+            $user->removeRole('admin');
+        }
+
+        return;
+    }
+    protected static function unmakeConsultant($user){
+        if($user->hasRole('consultant')){
+            $user->removeRole('consultant');
+        }
+
+        return;
+    }
+    protected static function unmakeHR($user){
+        if($user->hasRole('hr')){
+            $user->removeRole('hr');
+        }
+
+        return;
+    }
+    protected static function unmakeManager($user){
+        if($user->hasRole('manager')){
+            $user->removeRole('manager');
+        }
+
+        return;
+    }
+    protected static function unmakeWorker($user){
+        if($user->hasRole('worker')){
+            $user->removeRole('worker');
+        }
+
+        return;
     }
 
     protected function activities() {
