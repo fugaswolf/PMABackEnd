@@ -58,3 +58,4 @@ Route::post('/activities', 'ActivityController@showActivitiesByProject')->middle
 
 Route::resource('/entries', 'EntryController')->middleware('auth:api');
 Route::get('/entries/show', 'EntryController@show')->middleware('auth:api');
+Route::get('/entries/showPG', 'EntryController@showPG')->middleware('auth:api');
