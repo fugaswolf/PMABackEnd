@@ -5140,6 +5140,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5147,6 +5162,7 @@ __webpack_require__.r(__webpack_exports__);
       users: {},
       form: new Form({
         id: '',
+        roles: '',
         name: '',
         email: '',
         password: '',
@@ -5184,6 +5200,12 @@ __webpack_require__.r(__webpack_exports__);
       event.preventDefault();
       $('#addNewUser').modal('show');
       this.form.fill(user);
+      var role = this.getRoleName(user); //var element = document.getElementById(id);
+      //element.value = valueToSelect;
+      // https://stackoverflow.com/questions/43839066/how-can-i-set-selected-option-selected-in-vue-js-2
+    },
+    getRoleName: function getRoleName(user) {
+      return user.roles[0].name;
     },
     newModal: function newModal() {
       this.editmode = false;
@@ -88399,6 +88421,8 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.email))]),
                       _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(user.roles.name))]),
+                      _vm._v(" "),
                       _c("td", [
                         _vm._v(_vm._s(_vm._f("myDate")(user.created_at)))
                       ]),
@@ -88526,6 +88550,80 @@ var render = function() {
                 },
                 [
                   _c("div", { staticClass: "modal-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Role")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.role,
+                                expression: "form.role"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("role")
+                            },
+                            attrs: { type: "text", name: "role", id: "role" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.form,
+                                  "role",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", [_vm._v("Choose a role")]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "admin" } }, [
+                              _vm._v("Admin")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "worker" } }, [
+                              _vm._v("Worker")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "manager" } }, [
+                              _vm._v("Manager")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "hr" } }, [
+                              _vm._v("HR")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "consultant" } }, [
+                              _vm._v("Consultant")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("has-error", {
+                          attrs: { form: _vm.form, field: "role" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Name")]),
                       _vm._v(" "),
@@ -88696,6 +88794,8 @@ var staticRenderFns = [
       _c("th", [_vm._v("Name")]),
       _vm._v(" "),
       _c("th", [_vm._v("Email")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Role")]),
       _vm._v(" "),
       _c("th", [_vm._v("Registered at")]),
       _vm._v(" "),
