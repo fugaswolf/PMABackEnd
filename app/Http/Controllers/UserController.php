@@ -47,7 +47,30 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
+
+            $role = $request->role;
+
+        if ( ! $user->hasRole($role)){
+            $user->assignRole($role);
+            if(! $role == "admin"){
+                $user->removeRole('admin');
+            }
+            if(! $role == "consultant"){
+                $user->removeRole('consultant');
+            }
+            if(! $role == "hr"){
+                $user->removeRole('hr');
+            }
+            if(! $role == "manager"){
+                $user->removeRole('manager');
+            }
+            if(! $role == "worker"){
+                $user->removeRole('worker');
+            }
+        }
+        
             $user->save();
+
             return response()->json([
                 'message' => 'Successfully created user!'
             ], 201);
@@ -74,10 +97,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $work = Work::with('tags')->where('finalworkID', '=', $id)->firstOrFail();
-        //dd($work);
-        return new WorkResource($work);
-        //return $this->firstOrResponse('finalworkID', $id);
+        $user = User::where('id', '=', $id)->firstOrFail();
+        return new UserResource($user);
     }
 
     public function getRole($id){
@@ -92,12 +113,10 @@ class UserController extends Controller
     public function showByTitle($title)
     {
         return Work::where('finalworkTitle', 'LIKE', '%'.$title.'%')->get();
-        /*return $this->firstOrResponse('finalworkTitle',  $title);*/
     }
     public function showByDepartement($departement)
     {
         return Work::where('departement', 'LIKE', '%'.$departement.'%')->get();
-        /*return $this->firstOrResponse('departement', $departement);*/
     }
     /**
      * Show the form for editing the specified resource.
@@ -122,7 +141,16 @@ class UserController extends Controller
         $user = User::where('id', '=', $id)->firstOrFail();
 
         $user->fill($request->all())->save();
+
+        $role = $request->role;
+
+        if ( ! $user->hasRole($role)){
+            $user->assignRole($role);
+        }
+        
+
         return new UserResource($user);
+        
       
     }
     /**
