@@ -4956,7 +4956,7 @@ __webpack_require__.r(__webpack_exports__);
     loadEntries: function loadEntries() {
       var _this6 = this;
 
-      axios.get("api/entries/show").then(function (_ref3) {
+      axios.get("api/entries/showPG").then(function (_ref3) {
         var data = _ref3.data;
         return _this6.entries = data;
       });

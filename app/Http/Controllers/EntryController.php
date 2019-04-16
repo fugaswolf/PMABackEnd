@@ -77,7 +77,7 @@ class EntryController extends Controller
     public function show()
     {
         $user = Auth::user();
-        $entry = Entry::where('user_id', '=', $user->id)->latest()->get;
+        $entry = Entry::where('user_id', '=', $user->id)->latest()->get();
         return new EntryResource($entry);
     }
 
@@ -85,6 +85,7 @@ class EntryController extends Controller
     {
         $user = Auth::user();
         $entry = Entry::where('user_id', '=', $user->id)->latest()->paginate(15);
+        dd($entry);
         return new EntryResource($entry);
     }
 
