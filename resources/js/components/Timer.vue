@@ -258,7 +258,7 @@
             },
             loadEntries() {
                 axios
-                    .get("api/entries/show")
+                    .get("api/entries/showPG")
                     .then(({
                         data
                     }) => (this.entries = data));
