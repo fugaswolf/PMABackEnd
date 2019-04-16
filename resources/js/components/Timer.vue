@@ -10,12 +10,13 @@
                         <form>
                             <div class="form-row align-content-center">
                                 <div class="col-sm-3">
+                                    <label class="form-inline" style="opacity: 0.0">Sumbit</label>
                                     <input v-model="form.description" type="text" placeholder="What are you doing?"
                                         name="description" class="form-control mr-1"
                                         :class="{ 'is-invalid': form.errors.has('description') }">
                                 </div>
                                 <div class="col-xs-1">
-                                    <!-- -->
+                                    <label class="form-inline" style="opacity: 0.0">Sumbit</label>
                                     <select type="text" v-model.lazy="form.project_id" name="project_id" id="project_id" v-on:change="projectSelected($event)"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('project_id') }">
                                         <option value="" selected>Choose project</option>
@@ -24,6 +25,7 @@
                                     <has-error :form="form" field="project_id"></has-error>
                                 </div>
                                 <div class="col-xs-1" v-if="shownActivities" v-on:change="activitySelected($event)">
+                                    <label class="form-inline" style="opacity: 0.0">Sumbit</label>
                                     <select v-model.lazy="form.activity_id" type="text" name="activity_id" id="activity_id"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('activity_id') }"
                                         place>
@@ -48,6 +50,7 @@
                                         :class="{ 'is-invalid': form.errors.has('end_date') }">
                                 </div>
                                 <div class="col-xs-1">
+                                     <label class="form-inline" style="opacity: 0.0">Sumbit</label>
                                     <button type="button" @click.prevent="createEntry" class="btn btn-primary">Add entry</button>
                                 </div>
                             </div>
