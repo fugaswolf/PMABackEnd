@@ -27,7 +27,7 @@
                                     <td>{{user.id}}</td>
                                     <td>{{user.name}}</td>
                                     <td>{{user.email}}</td>
-                                    <td>{{user.roles.name}}</td>
+                                    <td>{{ displayRole(user) }}</td>
                                     <td>{{user.created_at | myDate}}</td>
                                     <td>
                                         <a href="" @click="editModal(user)">
@@ -67,7 +67,7 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Role</label>
-                                <select v-model="form.role" type="text" name="role" id="role"
+                                <select v-model="form.roles" type="text" name="role" id="role"
                                     class="form-control" :class="{ 'is-invalid': form.errors.has('role') }">
                                     <option>Choose a role</option>
                                     <option value="admin">Admin</option>
@@ -128,6 +128,9 @@
             }
         },
         methods: {
+            displayRole(user) {
+                return user.roles[0] === undefined ? 'N/A' : user.roles[0].name;
+            },
             getResults(page = 1){
                 axios.get('api/users?page=' + page)
 				.then(response => {
@@ -163,6 +166,10 @@
                 //element.value = valueToSelect;
 
                 // https://stackoverflow.com/questions/43839066/how-can-i-set-selected-option-selected-in-vue-js-2
+
+                this.form.roles = role;
+
+
             },
             getRoleName(user) {
                 return user.roles[0].name;
