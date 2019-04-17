@@ -119,20 +119,20 @@ class EntryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Auth::user();
+        $duration = $request->has('duration') && !is_null($request->input('duration')) ? : Entry::parseDuration($request->input('start_date'), $request->input('end_date'));
         //dump($request->all());
-        $work = Work::where('finalworkID', '=', $id)->firstOrFail();
-        $work->update([
-        'finalworkURL'=>   $request->input('finalworkURL'),
-        'finalworkTitle'=>   $request->input('finalworkTitle'),
-        'finalworkDescription'=>  $request->input('finalworkDescription'),
-        'finalworkAuthor'=>  $request->input('finalworkAuthor'),
-        'departement' => $request->input('departement'),
-        'finalworkField' => $request->input('finalworkField'),
-        'finalworkYear'=>  $request->input('finalworkYear'),
-        'finalworkPromoter'=>  $request->input('finalworkPromoter')
+        $entry = Entry::where('id', '=', $id)->firstOrFail();
+        $entry->update([
+        'activity_id'=>   $request->input('activity_id'),
+        'user_id'=>   $user,
+        'description'=>  $request->input('description'),
+        'start_date'=>  $request->input('start_date'),
+        'end_date' => $request->input('end_date'),
+        'duration' => $duration
         ]);
-        $work->save();
-        return new WorkResource($work);
+        $entry->fill();
+        return new EntryResource($entry);
       
     }
     /**
@@ -144,7 +144,7 @@ class EntryController extends Controller
     public function destroy($id)
     {
         return response()->json([
-            'message' => Work::where('finalworkID', '=', $id)->firstOrFail()->delete() ? 'Success.' : 'Failed.'
+            'message' => Entry::where('id', '=', $id)->firstOrFail()->delete() ? 'Success.' : 'Failed.'
         ]);
     }
 }
