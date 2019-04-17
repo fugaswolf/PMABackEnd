@@ -17,16 +17,17 @@
                                 </div>
                                 <div class="col-xs-1">
                                     <label class="form-inline" style="opacity: 0.0">Sumbit</label>
-                                    <select type="text" v-model.lazy="form.project_id" name="project_id" id="project_id" v-on:change="projectSelected($event)"
+                                    <select type="text" v-model="form.project_id" name="project_id" id="project_id" v-on:change="projectSelected($event)"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('project_id') }">
                                         <option value="" selected>Choose project</option>
                                         <option v-for="project in projects.data" v-bind:value="project.id" :key="project.id">{{project.name}}</option>
                                     </select>
                                     <has-error :form="form" field="project_id"></has-error>
                                 </div>
+                                
                                 <div class="col-xs-1" v-if="shownActivities" v-on:change="activitySelected($event)">
                                     <label class="form-inline" style="opacity: 0.0">Sumbit</label>
-                                    <select v-model.lazy="form.activity_id" type="text" name="activity_id" id="activity_id"
+                                    <select v-model="form.activity_id" type="text" name="activity_id" id="activity_id"
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('activity_id') }"
                                         place>
                                         <option value="" selected>Choose an activity</option>
@@ -195,7 +196,7 @@
                     .get('api/activitiesByProject/'+projectId)
                     .then(({
                         data
-                    }) => (this.shownActivities = data.data));
+                    }) => (this.shownActivities = data));
             },
             getResults(page = 1) {
                 axios.get('api/entries?page=' + page)
