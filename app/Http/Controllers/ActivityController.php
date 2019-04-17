@@ -80,6 +80,13 @@ class ActivityController extends Controller
         return $projectWithActivities;
     }
 
+    public function activitiesByProject($id)
+    {
+        $projectWithActivities = Activity::where('project_id', '=', $id)->get();
+        return $projectWithActivities;
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *
