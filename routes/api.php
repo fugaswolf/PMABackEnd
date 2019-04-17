@@ -55,6 +55,7 @@ Route::resource('/activities', 'ActivityController')->middleware('auth:api');
 Route::post('activities/create', 'ActivityController@create')->middleware('auth:api');
 Route::delete('/activities/{activity}', 'ActivityController@destroy')->middleware('auth:api');
 Route::post('/activities', 'ActivityController@showActivitiesByProject')->middleware('auth:api');
+Route::get('/activitiesByProject/{id}', 'ActivityController@activitiesByProject')->middleware('auth:api');
 
 Route::resource('/entries', 'EntryController')->middleware('auth:api');
 Route::get('/entries/show', 'EntryController@show')->middleware('auth:api');
