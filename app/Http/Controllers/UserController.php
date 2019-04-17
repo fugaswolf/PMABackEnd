@@ -47,27 +47,6 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
-
-            $role = $request->role;
-
-        if ( ! $user->hasRole($role)){
-            $user->assignRole($role);
-            if(! $role == "admin"){
-                $user->removeRole('admin');
-            }
-            if(! $role == "consultant"){
-                $user->removeRole('consultant');
-            }
-            if(! $role == "hr"){
-                $user->removeRole('hr');
-            }
-            if(! $role == "manager"){
-                $user->removeRole('manager');
-            }
-            if(! $role == "worker"){
-                $user->removeRole('worker');
-            }
-        }
         
             $user->save();
 
@@ -144,10 +123,13 @@ class UserController extends Controller
 
         $role = $request->role;
 
-        if ( ! $user->hasRole($role)){
+        if ( ! $user->hasRole($role)) {
+            // verwijder alle voorgaande rollen
+            $user->removeRoles();
+
+            // voeg nieuwe rol toe
             $user->assignRole($role);
         }
-        
 
         return new UserResource($user);
         
