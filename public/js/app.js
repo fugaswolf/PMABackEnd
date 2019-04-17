@@ -4859,6 +4859,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4892,7 +4893,7 @@ __webpack_require__.r(__webpack_exports__);
       var projectId = event.target.value;
       axios.get('api/activitiesByProject/' + projectId).then(function (_ref) {
         var data = _ref.data;
-        return _this.shownActivities = data.data;
+        return _this.shownActivities = data;
       });
     },
     getResults: function getResults() {
@@ -5174,6 +5175,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    displayRole: function displayRole(user) {
+      return user.roles[0] === undefined ? 'N/A' : user.roles[0].name;
+    },
     getResults: function getResults() {
       var _this = this;
 
@@ -5206,6 +5210,8 @@ __webpack_require__.r(__webpack_exports__);
       var role = this.getRoleName(user); //var element = document.getElementById(id);
       //element.value = valueToSelect;
       // https://stackoverflow.com/questions/43839066/how-can-i-set-selected-option-selected-in-vue-js-2
+
+      this.form.roles = role;
     },
     getRoleName: function getRoleName(user) {
       return user.roles[0].name;
@@ -87729,10 +87735,9 @@ var render = function() {
                         directives: [
                           {
                             name: "model",
-                            rawName: "v-model.lazy",
+                            rawName: "v-model",
                             value: _vm.form.project_id,
-                            expression: "form.project_id",
-                            modifiers: { lazy: true }
+                            expression: "form.project_id"
                           }
                         ],
                         staticClass: "form-control",
@@ -87822,10 +87827,9 @@ var render = function() {
                             directives: [
                               {
                                 name: "model",
-                                rawName: "v-model.lazy",
+                                rawName: "v-model",
                                 value: _vm.form.activity_id,
-                                expression: "form.activity_id",
-                                modifiers: { lazy: true }
+                                expression: "form.activity_id"
                               }
                             ],
                             staticClass: "form-control",
@@ -88460,7 +88464,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(user.email))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(user.roles.name))]),
+                      _c("td", [_vm._v(_vm._s(_vm.displayRole(user)))]),
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(_vm._s(_vm._f("myDate")(user.created_at)))
@@ -88602,8 +88606,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.form.role,
-                                expression: "form.role"
+                                value: _vm.form.roles,
+                                expression: "form.roles"
                               }
                             ],
                             staticClass: "form-control",
@@ -88623,7 +88627,7 @@ var render = function() {
                                   })
                                 _vm.$set(
                                   _vm.form,
-                                  "role",
+                                  "roles",
                                   $event.target.multiple
                                     ? $$selectedVal
                                     : $$selectedVal[0]
