@@ -161,12 +161,6 @@
                 $('#addNewUser').modal('show');
                 this.form.fill(user);
                 const role = this.getRoleName(user);
-
-                //var element = document.getElementById(id);
-                //element.value = valueToSelect;
-
-                // https://stackoverflow.com/questions/43839066/how-can-i-set-selected-option-selected-in-vue-js-2
-
                 this.form.roles = role;
 
 

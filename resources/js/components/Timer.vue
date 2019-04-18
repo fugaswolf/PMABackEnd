@@ -33,10 +33,8 @@
                                         class="form-control" :class="{ 'is-invalid': form.errors.has('activity_id') }"
                                         place>
                                         <option value="" selected>Choose an activity</option>
-                                        <!--<div v-if="shownActivities" >-->
                                         <option v-for="activity in shownActivities" :key="activity.id"
                                             v-bind:value="activity.id">{{activity.name}}</option>
-                                        <!--</div>-->
                                     </select>
                                     <has-error :form="form" field="activity_id"></has-error>
                                 </div>
@@ -130,7 +128,7 @@
                                 <select type="text" v-model.lazy="form.project_id" name="project_id" id="project_id"
                                     v-on:change="projectSelected($event)" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('project_id') }">
-                                    <option value="" selected>Choose project</option>
+                                    <option value="">Choose project</option>
                                     <option v-for="project in projects.data" v-bind:value="project.id"
                                         :key="project.id">{{project.name}}</option>
                                 </select>
@@ -141,8 +139,7 @@
                                 <select v-model.lazy="form.activity_id" type="text" name="activity_id" id="activity_id"
                                     class="form-control" :class="{ 'is-invalid': form.errors.has('activity_id') }"
                                     place>
-                                    <option value="" selected>Choose an activity</option>
-                                    <!--<div v-if="shownActivities" >-->
+                                    <option value="">Choose an activity</option>
                                     <option v-for="activity in shownActivities" :key="activity.id"
                                         v-bind:value="activity.id">{{activity.name}}</option>
                                     <!--</div>-->
@@ -187,8 +184,6 @@
                 shownActivities: [],
                 entries: {},
                 projects: {},
-                // projectsWithActivities: {},
-                // activities: {},
                 form: new Form({
                     id: '',
                     user_id: '',

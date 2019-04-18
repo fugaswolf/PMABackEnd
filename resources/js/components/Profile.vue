@@ -7,7 +7,7 @@
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-info-active">
                         <h3 class="widget-user-username">{{this.form.name}}</h3>
-                        <h5 class="widget-user-desc">Admin</h5>
+                        <h5 class="widget-user-desc">{{ this.form.roles }}</h5>
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle elevation-2" src="img/profile.png" alt="User Avatar">
@@ -102,6 +102,7 @@
                     id:'',
                     division_id: '',
                     name : '',
+                    roles: '',
                     email: '',
                     password: ''
                 })
@@ -111,6 +112,9 @@
             console.log('Component mounted.')
         },
         methods:{
+            displayRole(form) {
+                this.form.roles = form.roles[0].name === undefined ? 'N/A' : form.roles[0].name;
+            },
             updateInfo(){
                 this.$Progress.start();
                 this.form.put('api/users/'+this.form.id).then(() => {
