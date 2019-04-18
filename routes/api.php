@@ -21,6 +21,11 @@ Route::middleware('auth:api')->get('/users', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'AuthController@signup');
+});
+
 Route::get('profile', 'UserController@profile');
 
 Route::group(['middleware' => 'auth'], function() {
@@ -70,6 +75,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->get('/users', function (Request $request) {
     return $request->user();
 });
+
 
 
 Route::group([
