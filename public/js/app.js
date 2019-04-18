@@ -4090,6 +4090,7 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         division_id: '',
         name: '',
+        roles: '',
         email: '',
         password: ''
       })
@@ -4099,6 +4100,9 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
   },
   methods: {
+    displayRole: function displayRole(form) {
+      this.form.roles = form.roles[0].name === undefined ? 'N/A' : form.roles[0].name;
+    },
     updateInfo: function updateInfo() {
       var _this = this;
 
@@ -4875,17 +4879,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       shownActivities: [],
       entries: {},
       projects: {},
-      // projectsWithActivities: {},
-      // activities: {},
       form: new Form({
         id: '',
         user_id: '',
@@ -5223,10 +5222,7 @@ __webpack_require__.r(__webpack_exports__);
       event.preventDefault();
       $('#addNewUser').modal('show');
       this.form.fill(user);
-      var role = this.getRoleName(user); //var element = document.getElementById(id);
-      //element.value = valueToSelect;
-      // https://stackoverflow.com/questions/43839066/how-can-i-set-selected-option-selected-in-vue-js-2
-
+      var role = this.getRoleName(user);
       this.form.roles = role;
     },
     getRoleName: function getRoleName(user) {
@@ -86406,7 +86402,9 @@ var render = function() {
               _vm._v(_vm._s(this.form.name))
             ]),
             _vm._v(" "),
-            _c("h5", { staticClass: "widget-user-desc" }, [_vm._v("Admin")])
+            _c("h5", { staticClass: "widget-user-desc" }, [
+              _vm._v(_vm._s(this.form.roles))
+            ])
           ]),
           _vm._v(" "),
           _vm._m(0),
@@ -88162,11 +88160,9 @@ var render = function() {
                             }
                           },
                           [
-                            _c(
-                              "option",
-                              { attrs: { value: "", selected: "" } },
-                              [_vm._v("Choose project")]
-                            ),
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Choose project")
+                            ]),
                             _vm._v(" "),
                             _vm._l(_vm.projects.data, function(project) {
                               return _c(
@@ -88235,7 +88231,7 @@ var render = function() {
                           }
                         },
                         [
-                          _c("option", { attrs: { value: "", selected: "" } }, [
+                          _c("option", { attrs: { value: "" } }, [
                             _vm._v("Choose an activity")
                           ]),
                           _vm._v(" "),
