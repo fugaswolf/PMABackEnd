@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('user', 'AuthController@user');
 
     Route::group(['middleware' => 'role:admin'], function() {
-        Route::get('/entries/show', 'EntryController@show');
+        // Route::get('/entries/show', 'EntryController@show');
     });
 
     Route::post('users/create', 'UserController@create');
@@ -62,7 +62,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/activitiesByProject/{id}', 'ActivityController@activitiesByProject');
 
     Route::resource('/entries', 'EntryController');
-    // Route::get('/entries/show', 'EntryController@show');
+    Route::get('/entries/show', 'EntryController@show');
     Route::get('/entries/showPG', 'EntryController@showPG');
 });
 
