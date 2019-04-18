@@ -1,10 +1,13 @@
 <?php
 
 use Faker\Generator as Faker;
+use Spatie\Permission\Models\Role;
 
-$factory->define(Model::class, function (Faker $faker) {
+// wacht wa wilt ge doen
+// 5 rollen maken ? ka (wat wel gewerkt heeft op localhost lol)
+// je hebt die lokaal wsl zelf gemaakt (via phpmyadmin?) idk xD
+$factory->define(Role::class, function (Faker $faker) {
     return [
-        'name' => $faker->randomElement(['admin', 'manager', 'consultant', 'hr', 'worker']),
         'guard_name' => 'web'
     ];
 });
