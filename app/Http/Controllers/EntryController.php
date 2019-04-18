@@ -128,19 +128,22 @@ class EntryController extends Controller
     public function update(Request $request, $id)
     {
         $user = Auth::user();
-        $duration = $request->has('duration') && !is_null($request->input('duration')) ? : Entry::parseDuration($request->input('start_date'), $request->input('end_date'));
         
         $entry = Entry::where('id', '=', $id)->firstOrFail();
-        $entry->update([
-        'activity_id'=>   $request->input('activity_id'),
-        'user_id'=>   $user,
-        'description'=>  $request->input('description'),
-        'start_date'=>  $request->input('start_date'),
-        'end_date' => $request->input('end_date'),
-        'duration' => $duration
-        ]);
-        $entry->save();
 
+        $entry->fill([
+            'activity_id'=>   $request->input('activity_id'),
+            'user_id'=>   $user->id, // toch ? jup
+            'description'=>  $request->input('description'),
+            'start_date'=>  $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+        ]);
+
+        if ($request->has('duration') && !is_null($duration = $request->input('duration'))) {
+            $entry->fill(compact('duration'));
+        }
+
+        $entry->save();
         return new EntryResource($entry);
       
     }
