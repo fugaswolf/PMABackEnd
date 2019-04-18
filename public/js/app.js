@@ -4860,11 +4860,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       shownActivities: [],
-      editmode: false,
       entries: {},
       projects: {},
       // projectsWithActivities: {},
@@ -4915,16 +4932,15 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function () {
         _this3.$Progress.fail();
 
-        $('#editProject').modal('hide');
+        $('#editEntry').modal('hide');
         swal.fire("Failed!", "There was something wrong.", "warning");
       });
     },
     editModal: function editModal(entry) {
-      this.editmode = true;
       this.form.reset();
       event.preventDefault();
       $('#editEntry').modal('show');
-      this.form.fill(project);
+      this.form.fill(entry);
     },
     deleteEntry: function deleteEntry(id) {
       var _this4 = this;
@@ -87975,7 +87991,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Add entry")]
+                    [_vm._v("Add\n                                    entry")]
                   )
                 ])
               ])
@@ -88239,6 +88255,76 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Start")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.start_date,
+                            expression: "form.start_date"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.form.errors.has("start_date")
+                        },
+                        attrs: {
+                          type: "datetime-local",
+                          name: "start_date",
+                          id: "meeting-time"
+                        },
+                        domProps: { value: _vm.form.start_date },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.form,
+                              "start_date",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("End")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.form.end_date,
+                            expression: "form.end_date"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.form.errors.has("end_date")
+                        },
+                        attrs: {
+                          type: "datetime-local",
+                          name: "end_date",
+                          id: "meeting-time"
+                        },
+                        domProps: { value: _vm.form.end_date },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.form, "end_date", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
                       _c("label", [_vm._v("Description")]),
                       _vm._v(" "),
                       _c("textarea", {
@@ -88266,50 +88352,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button", "data-dismiss": "modal" }
-                      },
-                      [_vm._v("Close")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.editmode,
-                            expression: "editmode"
-                          }
-                        ],
-                        staticClass: "btn btn-success",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Update")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.editmode,
-                            expression: "!editmode"
-                          }
-                        ],
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Create project")]
-                    )
-                  ])
+                  _vm._m(3)
                 ]
               )
             ])
@@ -88366,6 +88409,27 @@ var staticRenderFns = [
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-success", attrs: { type: "submit" } },
+        [_vm._v("Update")]
       )
     ])
   }
