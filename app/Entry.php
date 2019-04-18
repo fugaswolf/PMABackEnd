@@ -16,8 +16,6 @@ class Entry extends Model
 
         $duration = Carbon::parse($end)->diff(Carbon::parse($start))->format('%H:%I');
 
-        // dd($duration);
-
         return $duration;
     }
 
@@ -27,5 +25,13 @@ class Entry extends Model
 
     public function activity(){
         return $this->belongsTo(\App\Activity::class);
+    }
+
+    public function setStartDate($start) {
+        $this->attributes['duration'] = self::parseDuration($start, $this->getAttribute('end_date'), $start);
+    }
+
+    public function setEndDate($end) {
+        $this->attributes['duration'] = self::parseDuration($this->getAttribute('start_date'), $end);
     }
 }
