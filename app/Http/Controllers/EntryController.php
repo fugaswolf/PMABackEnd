@@ -83,7 +83,7 @@ class EntryController extends Controller
         // project zou je kunnen ophalen via de activity (er is een project_id in de tabel activities, en customer haal je op via project fso (customer_id))
 
         // ok dit moet werken
-        $entry = Entry::with('activity', 'activity.project', 'activity.project.customer')->where('user_id', '=', $user->id)->latest()->get();
+        $entry = Entry::with('activity:id,name,project_id', 'activity.project:id,name,customer_id', 'activity.project.customer:id,name')->where('user_id', '=', $user->id)->latest()->get();
 
 
         return new EntryResource($entry);
