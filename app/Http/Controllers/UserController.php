@@ -121,7 +121,11 @@ class UserController extends Controller
 
         $user->fill($request->all())->save();
 
-        $role = $request->role;
+        $role = $request->roles;
+
+        // doe nog eens die request om te zien of die role er is
+        // hoezo?
+        //dd($role);
 
         if ( ! $user->hasRole($role)) {
             // verwijder alle voorgaande rollen
