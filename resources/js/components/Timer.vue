@@ -17,14 +17,16 @@
                                 </div>
                                 <div class="col-xs-1">
                                     <label class="form-inline" style="opacity: 0.0">Sumbit</label>
-                                    <select type="text" v-model="form.project_id" name="project_id" id="project_id" v-on:change="projectSelected($event)"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('project_id') }">
+                                    <select type="text" v-model="form.project_id" name="project_id" id="project_id"
+                                        v-on:change="projectSelected($event)" class="form-control"
+                                        :class="{ 'is-invalid': form.errors.has('project_id') }">
                                         <option value="" selected>Choose project</option>
-                                        <option v-for="project in projects.data" v-bind:value="project.id" :key="project.id">{{project.name}}</option>
+                                        <option v-for="project in projects.data" v-bind:value="project.id"
+                                            :key="project.id">{{project.name}}</option>
                                     </select>
                                     <has-error :form="form" field="project_id"></has-error>
                                 </div>
-                                
+
                                 <div class="col-xs-1" v-if="shownActivities" v-on:change="activitySelected($event)">
                                     <label class="form-inline" style="opacity: 0.0">Sumbit</label>
                                     <select v-model="form.activity_id" type="text" name="activity_id" id="activity_id"
@@ -32,7 +34,8 @@
                                         place>
                                         <option value="" selected>Choose an activity</option>
                                         <!--<div v-if="shownActivities" >-->
-                                            <option v-for="activity in shownActivities" :key="activity.id" v-bind:value="activity.id">{{activity.name}}</option>
+                                        <option v-for="activity in shownActivities" :key="activity.id"
+                                            v-bind:value="activity.id">{{activity.name}}</option>
                                         <!--</div>-->
                                     </select>
                                     <has-error :form="form" field="activity_id"></has-error>
@@ -51,8 +54,9 @@
                                         :class="{ 'is-invalid': form.errors.has('end_date') }">
                                 </div>
                                 <div class="col-xs-1">
-                                     <label class="form-inline" style="opacity: 0.0">Sumbit</label>
-                                    <button type="button" @click.prevent="createEntry" class="btn btn-primary">Add entry</button>
+                                    <label class="form-inline" style="opacity: 0.0">Sumbit</label>
+                                    <button type="button" @click.prevent="createEntry" class="btn btn-primary">Add
+                                        entry</button>
                                 </div>
                             </div>
                         </form>
@@ -123,23 +127,38 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Projects</label>
-                                <select type="text" v-model.lazy="form.project_id" name="project_id" id="project_id" v-on:change="projectSelected($event)"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('project_id') }">
-                                        <option value="" selected>Choose project</option>
-                                        <option v-for="project in projects.data" v-bind:value="project.id" :key="project.id">{{project.name}}</option>
-                                    </select>
-                                    <has-error :form="form" field="project_id"></has-error>
+                                <select type="text" v-model.lazy="form.project_id" name="project_id" id="project_id"
+                                    v-on:change="projectSelected($event)" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('project_id') }">
+                                    <option value="" selected>Choose project</option>
+                                    <option v-for="project in projects.data" v-bind:value="project.id"
+                                        :key="project.id">{{project.name}}</option>
+                                </select>
+                                <has-error :form="form" field="project_id"></has-error>
                             </div>
                             <div class="form-group">
                                 <label>Activities</label>
-                                 <select v-model.lazy="form.activity_id" type="text" name="activity_id" id="activity_id"
-                                        class="form-control" :class="{ 'is-invalid': form.errors.has('activity_id') }"
-                                        place>
-                                        <option value="" selected>Choose an activity</option>
-                                        <!--<div v-if="shownActivities" >-->
-                                            <option v-for="activity in shownActivities" :key="activity.id" v-bind:value="activity.id">{{activity.name}}</option>
-                                        <!--</div>-->
-                                    </select>
+                                <select v-model.lazy="form.activity_id" type="text" name="activity_id" id="activity_id"
+                                    class="form-control" :class="{ 'is-invalid': form.errors.has('activity_id') }"
+                                    place>
+                                    <option value="" selected>Choose an activity</option>
+                                    <!--<div v-if="shownActivities" >-->
+                                    <option v-for="activity in shownActivities" :key="activity.id"
+                                        v-bind:value="activity.id">{{activity.name}}</option>
+                                    <!--</div>-->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Start</label>
+                                <input type="datetime-local" v-model="form.start_date" class="form-control"
+                                    name="start_date" id="meeting-time"
+                                    :class="{ 'is-invalid': form.errors.has('start_date') }">
+                            </div>
+                             <div class="form-group">
+                                <label>End</label>
+                                <input type="datetime-local" v-model="form.end_date" class="form-control"
+                                    name="end_date" id="meeting-time"
+                                    :class="{ 'is-invalid': form.errors.has('end_date') }">
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
@@ -152,8 +171,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button v-show="editmode" type="submit" class="btn btn-success">Update</button>
-                            <button v-show="!editmode" type="submit" class="btn btn-primary">Create project</button>
+                            <button  type="submit" class="btn btn-success">Update</button>
                         </div>
                     </form>
                 </div>
@@ -167,7 +185,6 @@
         data() {
             return {
                 shownActivities: [],
-                editmode: false,
                 entries: {},
                 projects: {},
                 // projectsWithActivities: {},
@@ -190,10 +207,10 @@
                 console.log(event.target.value);
                 this.form.activity_id = event.target.value;
             },
-            projectSelected (event) {
+            projectSelected(event) {
                 const projectId = event.target.value;
                 axios
-                    .get('api/activitiesByProject/'+projectId)
+                    .get('api/activitiesByProject/' + projectId)
                     .then(({
                         data
                     }) => (this.shownActivities = data));
@@ -217,16 +234,15 @@
                     Fire.$emit('AfterCreated')
                 }).catch(() => {
                     this.$Progress.fail();
-                    $('#editProject').modal('hide');
+                    $('#editEntry').modal('hide');
                     swal.fire("Failed!", "There was something wrong.", "warning");
                 });
             },
             editModal(entry) {
-                this.editmode = true;
                 this.form.reset();
                 event.preventDefault();
                 $('#editEntry').modal('show');
-                this.form.fill(project);
+                this.form.fill(entry);
             },
             deleteEntry(id) {
                 event.preventDefault();
