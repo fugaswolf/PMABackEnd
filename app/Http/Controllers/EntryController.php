@@ -77,7 +77,15 @@ class EntryController extends Controller
     public function show()
     {
         $user = Auth::user();
-        $entry = Entry::where('user_id', '=', $user->id)->latest()->get();
+
+        // projectnaam, customernaam, activitynaam
+        // waar zit de project fzo ? 
+        // project zou je kunnen ophalen via de activity (er is een project_id in de tabel activities, en customer haal je op via project fso (customer_id))
+
+        // ok dit moet werken
+        $entry = Entry::with('activity', 'activity.project', 'activity.project.customer')->where('user_id', '=', $user->id)->latest()->get();
+
+
         return new EntryResource($entry);
     }
 
@@ -121,7 +129,7 @@ class EntryController extends Controller
     {
         $user = Auth::user();
         $duration = $request->has('duration') && !is_null($request->input('duration')) ? : Entry::parseDuration($request->input('start_date'), $request->input('end_date'));
-        //dump($request->all());
+        
         $entry = Entry::where('id', '=', $id)->firstOrFail();
         $entry->update([
         'activity_id'=>   $request->input('activity_id'),
@@ -131,7 +139,8 @@ class EntryController extends Controller
         'end_date' => $request->input('end_date'),
         'duration' => $duration
         ]);
-        $entry->fill();
+        $entry->save();
+
         return new EntryResource($entry);
       
     }
