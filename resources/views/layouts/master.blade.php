@@ -14,7 +14,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/css/app.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -96,15 +96,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </router-link>
                         </li>
-                        <li class="nav-item">
-                            <router-link to="/reports" class="nav-link">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>
-                                    Reports
-                                </p>
-                            </router-link>
-                        </li>
-
+                        @hasanyrole('admin|hr|manager')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-cogs"></i>
@@ -140,6 +132,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endhasanyrole
+                        @hasrole('admin')
                         <li class="nav-item has-treeview">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-cog"></i>
@@ -157,6 +151,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                             </ul>
                         </li>
+                        @endhasrole
                         <li class="nav-item">
 
                             <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
