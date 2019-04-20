@@ -61,9 +61,21 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/activities', 'ActivityController@showActivitiesByProject');
     Route::get('/activitiesByProject/{id}', 'ActivityController@activitiesByProject');
 
+    Route::get('/entries/showAll', 'EntryController@showAll');
     Route::resource('/entries', 'EntryController');
     Route::get('/entries/show', 'EntryController@show');
     Route::get('/entries/showPG', 'EntryController@showPG');
+    Route::post('/entries/syncAll', 'EntryController@syncAll');
+
+
+    Route::get('/reports/totalEmployees', 'ReportsController@totalEmployees');
+    Route::get('/reports/totalEntries', 'ReportsController@totalEntries');
+    Route::get('/reports/totalTodaysEntries', 'ReportsController@totalTodaysEntries');
+    Route::get('/reports/totalProjects', 'ReportsController@totalProjects');
+    Route::get('/reports/totalProjectsSales', 'ReportsController@totalProjectsSales');
+    Route::get('/reports/totalTodaysEntriesTime', 'ReportsController@totalTodaysEntriesTime');
+    Route::get('/reports/totalEntriesTime', 'ReportsController@totalEntriesTime');
+    
 });
 
 /* BACKUP
