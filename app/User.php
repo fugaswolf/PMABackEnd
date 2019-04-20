@@ -90,15 +90,6 @@ class User extends Authenticatable
      * Remove all user roles.
      */
     public function removeRoles() {
-        // omvormen naar 1 query voor performantie
-        /*
-        $this->removeRole('worker');
-        $this->removeRole('hr');
-        $this->removeRole('consultant');
-        $this->removeRole('manager');
-        $this->removeRole('admin');
-        */
-
         $this->roles()->detach();
     }
 }
