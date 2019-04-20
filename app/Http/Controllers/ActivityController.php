@@ -21,7 +21,6 @@ class ActivityController extends Controller
 
          $projectsWithActivities = Project::with('activities')->latest()->paginate(5);
 
-         // @TODO fix de resource later
          return $projectsWithActivities;
     }
 
