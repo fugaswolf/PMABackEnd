@@ -14,7 +14,7 @@ class Entry extends Model
 
     public static function parseDuration($start, $end) {
 
-        $duration = Carbon::parse($end)->diff(Carbon::parse($start))->format('%H:%I');
+        $duration = Carbon::parse($start)->diff(Carbon::parse($end))->format('%H:%I');
 
         return $duration;
     }
@@ -27,11 +27,27 @@ class Entry extends Model
         return $this->belongsTo(\App\Activity::class);
     }
 
-    public function setStartDate($start) {
-        $this->attributes['duration'] = self::parseDuration($start, $this->getAttribute('end_date'), $start);
+    public function setStartDateAttribute($start) {
+        //printf("[ start mutator called ]");
+
+        $diff = self::parseDuration($start, $this->getAttribute('end_date'));
+
+        //var_dump($diff);
+
+        $this->attributes['duration'] = $diff;
+
+        $this->attributes['start_date'] = $start;
     }
 
-    public function setEndDate($end) {
-        $this->attributes['duration'] = self::parseDuration($this->getAttribute('start_date'), $end);
+    public function setEndDateAttribute($end) {
+        //printf("[ end mutator called ]");
+
+        $diff = self::parseDuration($this->getAttribute('start_date'), $end);
+
+        //var_dump($diff);
+
+        $this->attributes['duration'] = $diff;
+
+        $this->attributes['end_date'] = $end;
     }
 }
