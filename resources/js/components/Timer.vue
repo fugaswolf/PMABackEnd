@@ -75,6 +75,8 @@
                             <tbody>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Project</th>
+                                    <th>Activity</th>
                                     <th>Description</th>
                                     <th>Date Start</th>
                                     <th>Date End</th>
@@ -83,6 +85,8 @@
                                 </tr>
                                 <tr v-for="entry in entries.data" :key="entry.id">
                                     <td>{{entry.id}}</td>
+                                    <td>{{ entry.activity.project.name }}</td>
+                                    <td>{{entry.activity.name}}</td>
                                     <td>{{entry.description}}</td>
                                     <td>{{entry.start_date}}</td>
                                     <td>{{entry.end_date}}</td>
@@ -211,7 +215,7 @@
                     }) => (this.shownActivities = data));
             },
             getResults(page = 1) {
-                axios.get('api/entries?page=' + page)
+                axios.get('api/entries/showPG?page=' + page)
                     .then(response => {
                         this.entries = response.data;
                     });
