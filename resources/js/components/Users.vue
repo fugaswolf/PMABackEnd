@@ -71,7 +71,6 @@
                                     class="form-control" :class="{ 'is-invalid': form.errors.has('role') }">
                                     <option>Choose a role</option>
                                     <option value="admin">Admin</option>
-                                    <option value="worker">Worker</option>
                                     <option value="manager">Manager</option>
                                     <option value="hr">HR</option>
                                     <option value="consultant">Consultant</option>
