@@ -18,12 +18,4 @@ class ProjectResource extends JsonResource
             'customer' => $this->resource->customer->toArray()
         ];
     }
-
-    // public static function getActivities($request)
-    // {
-    //     return parent::toArray($request);
-    //     // return parent::toArray($request) + [
-    //     //     'activity' => $this->resource->activity->toArray()
-    //     // ];
-    // }
 }
