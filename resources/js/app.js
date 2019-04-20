@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import moment from 'moment';
+import { Line, Bar, mixins } from 'vue-chartjs';
 import { Form, HasError, AlertError } from 'vform';
 
 import DatePicker from 'vue2-datepicker';
@@ -15,6 +16,18 @@ window.DatePicker = DatePicker;
 
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+
+Vue.filter('toCurrency', function (value) {
+    if (typeof value !== "number") {
+        return value;
+    }
+    var formatter = new Intl.NumberFormat('de-DE', {
+        style: 'currency',
+        currency: 'EUR',
+        minimumFractionDigits: 0
+    });
+    return formatter.format(value);
+});
 
 // ES6 Modules or TypeScript
 import swal from 'sweetalert2'
