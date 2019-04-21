@@ -65,20 +65,29 @@ class ReportsController extends Controller
     {
         $today = Carbon::today()->toDateString();
 
-        $seconds = Entry::where('created_at', 'like', '%'.$today.'%')->sum(DB::raw("TIME_TO_SEC(duration)"));
+        // $seconds = Entry::where('created_at', 'like', '%'.$today.'%')->sum(DB::raw("TIME_TO_SEC(duration)"));
 
-        $total = Carbon::createFromTimestampMs((int) $seconds * 1000);
+        $time = DB::table('entries')->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(duration))) as my_sum'))
+                                    ->where('created_at', 'like', '%'.$today.'%')
+                                    ->get()
+                                    ->first()
+                                    ->my_sum;
 
-        return "{$total->format('h')} hours and {$total->format('i')} minutes";
+        $split = explode(':', $time);
+
+        return "{$split[0]} hours and {$split[1]} minutes";
     }
 
     public function totalEntriesTime()
     {
-        $seconds = Entry::sum(DB::raw("TIME_TO_SEC(duration)"));
+        $time = DB::table('entries')->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(duration))) as my_sum'))
+                                    ->get()
+                                    ->first()
+                                    ->my_sum;
 
-        $total = Carbon::createFromTimestampMs((int) $seconds * 1000);
+        $split = explode(':', $time);
 
-        return "{$total->format('h')} hours and {$total->format('i')} minutes";
+        return "{$split[0]} hours and {$split[1]} minutes";
     }
     /**
      * Show the form for creating a new resource.
