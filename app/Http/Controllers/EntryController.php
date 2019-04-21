@@ -177,7 +177,7 @@ class EntryController extends Controller
         foreach (/*$actualData*/ $data as $entry){
             \App\Entry::updateOrCreate(
                 [
-                    'id' => $entry['id'] ?? null // ez fix
+                    'id' => $entry['id'] ?? null
                 ],
                 [
                     'user_id' => $user->id,
