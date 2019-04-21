@@ -147,8 +147,6 @@ class EntryController extends Controller
             'start_date'=>  $request->input('start_date'),
             'end_date' => $request->input('end_date'),
         ]);
-
-        // damn
     
         $entry->save();
         return new EntryResource($entry);
