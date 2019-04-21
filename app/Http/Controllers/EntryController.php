@@ -171,6 +171,7 @@ class EntryController extends Controller
      * Sync entries from json data
      */
     public function syncAll(Request $request) {
+        $user = Auth::user();
         $data = $request->json()->get('data');
 
         foreach (/*$actualData*/ $data as $entry){
@@ -179,7 +180,7 @@ class EntryController extends Controller
                     'id' => $entry['id'] ?? null // ez fix
                 ],
                 [
-                    'user_id' => $entry['user_id'],
+                    'user_id' => $user->id,
                     'start_date' => $entry['start_date'],
                     'end_date' => $entry['end_date'],
                     'duration' => $entry['duration'],
