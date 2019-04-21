@@ -18,7 +18,7 @@ class CreateEntriesTable extends Migration
             $table->integer('user_id');
             $table->timestamp('start_date');
             $table->timestamp('end_date');
-            $table->string('duration');
+            $table->time('duration');
             $table->text('description');
             $table->integer('activity_id');
             $table->timestamps();
