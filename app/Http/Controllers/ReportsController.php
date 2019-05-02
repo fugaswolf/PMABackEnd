@@ -104,8 +104,8 @@ class ReportsController extends Controller
 
         $split = explode(':', $time);
         $split[0] = ltrim($split[0], '0');
-        $split[1] = ltrim($split[0], '0');
-        
+        $split[1] = ltrim($split[1], '0');
+
         if($time != null){
             return "{$split[0]} hours and {$split[1]} minutes";
         }
@@ -135,7 +135,7 @@ class ReportsController extends Controller
         // str_replace("0","",$time);
         $split = explode(':', $time);
         $split[0] = ltrim($split[0], '0');
-        $split[1] = ltrim($split[0], '0');
+        $split[1] = ltrim($split[1], '0');
 
         if($time != null){
             return "{$split[0]} hours and {$split[1]} minutes";
