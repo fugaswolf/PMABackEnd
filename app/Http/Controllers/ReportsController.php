@@ -103,7 +103,9 @@ class ReportsController extends Controller
                                     ->my_sum;
 
         $split = explode(':', $time);
-
+        $split[0] = ltrim($split[0], '0');
+        $split[1] = ltrim($split[0], '0');
+        
         if($time != null){
             return "{$split[0]} hours and {$split[1]} minutes";
         }
@@ -132,9 +134,11 @@ class ReportsController extends Controller
                                     
         // str_replace("0","",$time);
         $split = explode(':', $time);
+        $split[0] = ltrim($split[0], '0');
+        $split[1] = ltrim($split[0], '0');
 
         if($time != null){
-            return "ltrim({$split[0]}, '0') hours and {$split[1]} minutes";
+            return "{$split[0]} hours and {$split[1]} minutes";
         }
         else {
             return "No todays entries";
