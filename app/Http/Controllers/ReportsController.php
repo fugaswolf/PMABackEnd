@@ -107,7 +107,7 @@ class ReportsController extends Controller
         $split1 = ltrim($split[1], '0');
 
         if($time != null){
-            return "{$split0} hours and {$split1} minutes";
+            return "{$split0} hours and {$split[1]} minutes";
         }
         else {
             return "No todays entries";
@@ -138,7 +138,7 @@ class ReportsController extends Controller
         $split1 = ltrim($split[1], '0');
 
         if($time != null){
-            return "{$split0} hours and {$split1} minutes";
+            return "{$split0} hours and {$split[1]} minutes";
         }
         else {
             return "No todays entries";
