@@ -104,7 +104,12 @@ class ReportsController extends Controller
 
         $split = explode(':', $time);
 
-        return "{$split[0]} hours and {$split[1]} minutes";
+        if($time != null){
+            return "{$split[0]} hours and {$split[1]} minutes";
+        }
+        else {
+            return "No todays entries";
+        }
     }
 
 
@@ -126,7 +131,12 @@ class ReportsController extends Controller
 
         $split = explode(':', $time);
 
-        return "{$split[0]} hours and {$split[1]} minutes";
+        if($time != null){
+            return "{$split[0]} hours and {$split[1]} minutes";
+        }
+        else {
+            return "No todays entries";
+        }
     }
 
     public function totalTodaysEntriesMobile()
@@ -139,15 +149,26 @@ class ReportsController extends Controller
         ->where('user_id', '=', $user->id)
         ->count();
         //Return collection of works as a resource
-        return $entries;
+      
+        if($entries != null){
+            return $entries;
+        }
+        else {
+            return "No entries";
+        }
     }
 
     public function totalEntriesMobile()
     {
         $user = Auth::user();
-        $entries = Entry::where('user_id', '=', $user->id)->count();;
+        $entries = Entry::where('user_id', '=', $user->id)->count();
         //Return collection of works as a resource
-        return $entries;
+        if($entries != null){
+            return $entries;
+        }
+        else {
+            return "No entries";
+        }
     }
     
     /**
