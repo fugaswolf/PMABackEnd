@@ -75,6 +75,12 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/reports/totalProjectsSales', 'ReportsController@totalProjectsSales');
     Route::get('/reports/totalTodaysEntriesTime', 'ReportsController@totalTodaysEntriesTime');
     Route::get('/reports/totalEntriesTime', 'ReportsController@totalEntriesTime');
+
+    /* MOBILE REPORTS*/
+    Route::get('/reports/totalEntriesMobile', 'ReportsController@totalEntriesMobile');
+    Route::get('/reports/totalTodaysEntriesMobile', 'ReportsController@totalTodaysEntriesMobile');
+    Route::get('/reports/totalTodaysEntriesTimeMobile', 'ReportsController@totalTodaysEntriesTimeMobile');
+    Route::get('/reports/totalEntriesTimeMobile', 'ReportsController@totalEntriesTimeMobile');
     
 });
 
