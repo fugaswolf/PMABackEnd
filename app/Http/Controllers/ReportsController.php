@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use App\Htpp\Resources\EntryResource;
 use App\Htpp\Resources\ProjectResource;
 
