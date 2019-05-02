@@ -132,7 +132,7 @@ class ReportsController extends Controller
         $split = explode(':', $time);
 
         if($time != null){
-            return "{$split[0]} hours and {$split[1]} minutes";
+            return "ltrim({$split[0]}, '0') hours and {$split[1]} minutes";
         }
         else {
             return "No todays entries";
