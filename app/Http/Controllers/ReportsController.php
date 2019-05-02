@@ -121,14 +121,16 @@ class ReportsController extends Controller
         // $seconds = Entry::where('created_at', 'like', '%'.$today.'%')->sum(DB::raw("TIME_TO_SEC(duration)"));
 
         $time = DB::table('entries')->select(DB::raw('SEC_TO_TIME(SUM(TIME_TO_SEC(duration))) as my_sum'))
-                                    ->whereColumn([
+                                    ->where([
                                         ['created_at', 'like', '%'.$today.'%'],
                                         ['user_id', '=', $user->id]
                                     ])
                                     ->get()
                                     ->first()
                                     ->my_sum;
-
+        
+                                    
+        // str_replace("0","",$time);
         $split = explode(':', $time);
 
         if($time != null){
