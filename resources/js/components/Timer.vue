@@ -163,8 +163,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea v-model="form.comment" type="text" name="comment" class="form-control"
-                                    :class="{ 'is-invalid': form.errors.has('comment') }"></textarea>
+                                <textarea v-model="form.description" type="text" name="description" class="form-control"
+                                    :class="{ 'is-invalid': form.errors.has('description') }"></textarea>
 
                             </div>
 

@@ -103688,20 +103688,26 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.comment,
-                            expression: "form.comment"
+                            value: _vm.form.description,
+                            expression: "form.description"
                           }
                         ],
                         staticClass: "form-control",
-                        class: { "is-invalid": _vm.form.errors.has("comment") },
-                        attrs: { type: "text", name: "comment" },
-                        domProps: { value: _vm.form.comment },
+                        class: {
+                          "is-invalid": _vm.form.errors.has("description")
+                        },
+                        attrs: { type: "text", name: "description" },
+                        domProps: { value: _vm.form.description },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "comment", $event.target.value)
+                            _vm.$set(
+                              _vm.form,
+                              "description",
+                              $event.target.value
+                            )
                           }
                         }
                       })
