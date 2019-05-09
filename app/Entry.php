@@ -12,10 +12,10 @@ class Entry extends Model
         'activity_id', 'user_id', 'start_date', 'end_date', 'duration', 'description'
     ];
 
-    protected $casts = [
-        'start_date' => 'date:yyyy-MM-ddThh:mm',
-        'end_date' => 'date:yyyy-MM-ddThh:mm'
-    ];
+    // protected $casts = [
+    //     'start_date' => 'date:yyyy-MM-ddThh:mm',
+    //     'end_date' => 'date:yyyy-MM-ddThh:mm'
+    // ];
 
     public static function parseDuration($start, $end) {
 
