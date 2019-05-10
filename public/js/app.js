@@ -5181,7 +5181,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         // Send request to the server
         if (result.value) {
-          _this4.form.delete('api/entries/0').then(function () {
+          _this4.form.delete('api/entries/' + id).then(function () {
             swal.fire('Deleted!', 'Entry has been deleted.', 'success'), Fire.$emit('AfterCreated');
           }).catch(function () {
             swal.fire("Failed!", "There was something wrong.", "warning");

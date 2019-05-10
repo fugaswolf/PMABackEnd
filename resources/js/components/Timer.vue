@@ -258,7 +258,7 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.form.delete('api/entries/0').then(() => {
+                        this.form.delete('api/entries/' + id).then(() => {
                             swal.fire(
                                     'Deleted!',
                                     'Entry has been deleted.',

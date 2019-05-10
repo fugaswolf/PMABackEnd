@@ -152,10 +152,10 @@ class EntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         return response()->json([
-            'message' => Entry::where('id', '=', $request->input('id'))->firstOrFail()->delete() ? 'Success.' : 'Failed.'
+            'message' => Entry::where('id', '=', $id)->firstOrFail()->delete() ? 'Success.' : 'Failed.'
         ]);
     }
 
