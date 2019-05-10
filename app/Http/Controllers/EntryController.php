@@ -134,21 +134,15 @@ class EntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request/*, $id*/)
     {
+
         $user = Auth::user();
         
-        $entry = Entry::where('id', '=', $id)->firstOrFail();
+        $entry = Entry::where('id', '=', $request->input('id'))->firstOrFail();
 
-        $entry->fill([
-            'activity_id'=>   $request->input('activity_id'),
-            'user_id'=>   $user->id,
-            'description'=>  $request->input('description'),
-            'start_date'=>  $request->input('start_date'),
-            'end_date' => $request->input('end_date'),
-        ]);
+        $entry->fill($request->all())->save();
     
-        $entry->save();
         return new EntryResource($entry);
       
     }
@@ -158,10 +152,10 @@ class EntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         return response()->json([
-            'message' => Entry::where('id', '=', $id)->firstOrFail()->delete() ? 'Success.' : 'Failed.'
+            'message' => Entry::where('id', '=', $request->input('id'))->firstOrFail()->delete() ? 'Success.' : 'Failed.'
         ]);
     }
 

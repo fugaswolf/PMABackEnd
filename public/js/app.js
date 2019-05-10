@@ -5146,8 +5146,10 @@ __webpack_require__.r(__webpack_exports__);
     updateEntry: function updateEntry(id) {
       var _this3 = this;
 
-      this.$Progress.start();
-      this.form.put('api/entries/' + this.form.id).then(function () {
+      this.$Progress.start(); // niet vergeten dat er nu wel een ID veld moet zijn in die form
+      // en ook bij delete
+
+      this.form.put('api/entries/0').then(function () {
         swal.fire('Updated!', 'The entry\'s information is updated.', 'success'), _this3.$Progress.finish();
         $('#editEntry').modal('hide');
         Fire.$emit('AfterCreated');
@@ -5179,7 +5181,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         // Send request to the server
         if (result.value) {
-          _this4.form.delete('api/entries/' + id).then(function () {
+          _this4.form.delete('api/entries/0').then(function () {
             swal.fire('Deleted!', 'Entry has been deleted.', 'success'), Fire.$emit('AfterCreated');
           }).catch(function () {
             swal.fire("Failed!", "There was something wrong.", "warning");

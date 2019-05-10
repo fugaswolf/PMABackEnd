@@ -222,7 +222,9 @@
             },
             updateEntry(id) {
                 this.$Progress.start();
-                this.form.put('api/entries/' + this.form.id).then(() => {
+                // niet vergeten dat er nu wel een ID veld moet zijn in die form
+                // en ook bij delete
+                this.form.put('api/entries/0').then(() => {
                     swal.fire(
                             'Updated!',
                             'The entry\'s information is updated.',
@@ -256,7 +258,7 @@
                 }).then((result) => {
                     // Send request to the server
                     if (result.value) {
-                        this.form.delete('api/entries/' + id).then(() => {
+                        this.form.delete('api/entries/0').then(() => {
                             swal.fire(
                                     'Deleted!',
                                     'Entry has been deleted.',
