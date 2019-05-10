@@ -5146,9 +5146,7 @@ __webpack_require__.r(__webpack_exports__);
     updateEntry: function updateEntry(id) {
       var _this3 = this;
 
-      this.$Progress.start(); // niet vergeten dat er nu wel een ID veld moet zijn in die form
-      // en ook bij delete
-
+      this.$Progress.start();
       this.form.put('api/entries/0').then(function () {
         swal.fire('Updated!', 'The entry\'s information is updated.', 'success'), _this3.$Progress.finish();
         $('#editEntry').modal('hide');
