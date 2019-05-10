@@ -15,10 +15,18 @@ class Entry extends Model
     // protected $casts = [
     //     'start_date' => 'date:yyyy-MM-ddThh:mm',
     //     'end_date' => 'date:yyyy-MM-ddThh:mm'
+
+    // Y-m-d\TH:i:s
+    // Y-m-d\TH:i:sP (waarom P?)
     // ];
 
-    public static function parseDuration($start, $end) {
+    protected $casts = [
+        //'start_date' => 'date:Y-m-d\TH:i:sP',
+        //'end_date' => 'date:Y-m-d\TH:i:sP'
+    ];
 
+    public static function parseDuration($start, $end) {
+        // parse volgens Y-m-d\TH:i:s
         $duration = Carbon::parse($start)->diff(Carbon::parse($end))->format('%H:%I');
 
         return $duration;

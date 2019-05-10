@@ -134,18 +134,41 @@ class EntryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request/*, $id*/)
-    {
+    // public function update(Request $request/*, $id*/)
+    // {
 
+    //     $user = Auth::user();
+        
+    //     $entry = Entry::where('id', '=', $request->input('id'))->firstOrFail();
+
+    //     //dd($request->all());
+
+    //     $entry->fill($request->all())->save();
+    
+    //     return new EntryResource($entry);
+      
+    // }
+
+
+    public function update(Request $request, $id)
+    {
         $user = Auth::user();
         
         $entry = Entry::where('id', '=', $request->input('id'))->firstOrFail();
-
-        $entry->fill($request->all())->save();
+        $entry->fill([
+            'activity_id'=>   $request->input('activity_id'),
+            'user_id'=>   $user->id,
+            'description'=>  $request->input('description'),
+            'start_date'=>  $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+        ]);
     
+        $entry->save();
         return new EntryResource($entry);
       
     }
+
+
     /**
      * Remove the specified resource from storage.
      *
