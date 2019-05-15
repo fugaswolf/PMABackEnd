@@ -1,12 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
 use Illuminate\Support\Facades\Hash;
-
 class AuthController extends Controller
 {
     /**
@@ -18,9 +16,7 @@ class AuthController extends Controller
      * @param  [string] password_confirmation
      * @return [string] message
      */
-
     public function signup (Request $request) {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -51,9 +47,7 @@ class AuthController extends Controller
      * @return [string] token_type
      * @return [string] expires_at
      */
-
     public function login (Request $request) {
-
         $user = User::where('email', $request->email)->first();
     
         if ($user) {
@@ -78,9 +72,7 @@ class AuthController extends Controller
      *
      * @return [string] message
      */
-
     public function logout (Request $request) {
-
         $token = $request->user()->token();
         $token->revoke();
     
@@ -98,5 +90,4 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
-
 }
