@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'json.response' => \App\Http\Middleware\ForceJsonResponse::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         /* spatie role middleware*/
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
