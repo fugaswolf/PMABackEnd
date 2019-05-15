@@ -96,7 +96,7 @@
                                     :class="{ 'is-invalid': form.errors.has('comment') }"></textarea>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" v-if="editmode === true">
                                 <label>Status</label>
                                 <select v-model="form.status" type="text" name="status" id="status" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('status') }">
@@ -129,11 +129,11 @@
                 projects: {},
                 projectsWithActivities: {},
                 form: new Form({
-                    id: "",
-                    project_id: "",
-                    name: "",
-                    comment: "",
-                    status: "",
+                    id: '',
+                    project_id: '',
+                    name: '',
+                    comment: '',
+                    status: '',
                     remember: false
                 })
             };
@@ -230,6 +230,7 @@
             createActivity() {
                 this.$Progress.start();
                 // Submit the form via a POST request
+                this.form.status = '1';
                 this.form
                     .post("api/activities/create")
                     .then(() => {

@@ -3809,7 +3809,7 @@ __webpack_require__.r(__webpack_exports__);
         address: '',
         phone: '',
         email: '',
-        status: '',
+        status: '1',
         remember: false
       })
     };
@@ -4499,7 +4499,7 @@ __webpack_require__.r(__webpack_exports__);
         name: '',
         comment: '',
         budget: '',
-        status: '',
+        status: '1',
         remember: false
       })
     };
@@ -4783,11 +4783,11 @@ __webpack_require__.r(__webpack_exports__);
       projects: {},
       projectsWithActivities: {},
       form: new Form({
-        id: "",
-        project_id: "",
-        name: "",
-        comment: "",
-        status: "",
+        id: '',
+        project_id: '',
+        name: '',
+        comment: '',
+        status: '',
         remember: false
       })
     };
@@ -4879,6 +4879,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$Progress.start(); // Submit the form via a POST request
 
+      this.form.status = '1';
       this.form.post("api/activities/create").then(function () {
         Fire.$emit("AfterCreated");
         $("#addNewActivity").modal("hide");
@@ -101307,73 +101308,76 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Status")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.status,
-                                expression: "form.status"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has("status")
-                            },
-                            attrs: {
-                              type: "text",
-                              name: "status",
-                              id: "status"
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "status",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
+                    _vm.editmode === true
+                      ? _c(
+                          "div",
+                          { staticClass: "form-group" },
                           [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Choose a status")
-                            ]),
+                            _c("label", [_vm._v("Status")]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "1" } }, [
-                              _vm._v("Active")
-                            ]),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.status,
+                                    expression: "form.status"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.form.errors.has("status")
+                                },
+                                attrs: {
+                                  type: "text",
+                                  name: "status",
+                                  id: "status"
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "status",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v("Choose a status")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "1" } }, [
+                                  _vm._v("Active")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "2" } }, [
+                                  _vm._v("Inactive")
+                                ])
+                              ]
+                            ),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "2" } }, [
-                              _vm._v("Inactive")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("has-error", {
-                          attrs: { form: _vm.form, field: "status" }
-                        })
-                      ],
-                      1
-                    )
+                            _c("has-error", {
+                              attrs: { form: _vm.form, field: "status" }
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [
@@ -102347,73 +102351,76 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Status")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.status,
-                                expression: "form.status"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has("status")
-                            },
-                            attrs: {
-                              type: "text",
-                              name: "status",
-                              id: "status"
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "status",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
+                    _vm.editmode === true
+                      ? _c(
+                          "div",
+                          { staticClass: "form-group" },
                           [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Choose a status")
-                            ]),
+                            _c("label", [_vm._v("Status")]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "1" } }, [
-                              _vm._v("Active")
-                            ]),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.status,
+                                    expression: "form.status"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.form.errors.has("status")
+                                },
+                                attrs: {
+                                  type: "text",
+                                  name: "status",
+                                  id: "status"
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "status",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v("Choose a status")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "1" } }, [
+                                  _vm._v("Active")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "2" } }, [
+                                  _vm._v("Inactive")
+                                ])
+                              ]
+                            ),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "2" } }, [
-                              _vm._v("Inactive")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("has-error", {
-                          attrs: { form: _vm.form, field: "status" }
-                        })
-                      ],
-                      1
-                    )
+                            _c("has-error", {
+                              attrs: { form: _vm.form, field: "status" }
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [
@@ -102844,73 +102851,76 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("label", [_vm._v("Status")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.status,
-                                expression: "form.status"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.form.errors.has("status")
-                            },
-                            attrs: {
-                              type: "text",
-                              name: "status",
-                              id: "status"
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "status",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
+                    _vm.editmode === true
+                      ? _c(
+                          "div",
+                          { staticClass: "form-group" },
                           [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Choose a status")
-                            ]),
+                            _c("label", [_vm._v("Status")]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "1" } }, [
-                              _vm._v("Active")
-                            ]),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.status,
+                                    expression: "form.status"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid": _vm.form.errors.has("status")
+                                },
+                                attrs: {
+                                  type: "text",
+                                  name: "status",
+                                  id: "status"
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "status",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v("Choose a status")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "1" } }, [
+                                  _vm._v("Active")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "2" } }, [
+                                  _vm._v("Inactive")
+                                ])
+                              ]
+                            ),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "2" } }, [
-                              _vm._v("Inactive")
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("has-error", {
-                          attrs: { form: _vm.form, field: "status" }
-                        })
-                      ],
-                      1
-                    )
+                            _c("has-error", {
+                              attrs: { form: _vm.form, field: "status" }
+                            })
+                          ],
+                          1
+                        )
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [

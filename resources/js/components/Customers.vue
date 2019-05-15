@@ -129,7 +129,7 @@
                                 <has-error :form="form" field="email"></has-error>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" v-if="editmode === true">
                                 <label>Status</label>
                                 <select v-model="form.status" type="text" name="status" id="status" class="form-control"
                                     :class="{ 'is-invalid': form.errors.has('status') }">
@@ -169,7 +169,7 @@
                     address: '',
                     phone: '',
                     email: '',
-                    status: '',
+                    status: '1',
                     remember: false
                 })
             }
